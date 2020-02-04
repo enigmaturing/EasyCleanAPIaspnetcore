@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EasyClean.API.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasyClean.API.Controllers
 {
@@ -20,17 +21,17 @@ namespace EasyClean.API.Controllers
 
         // GET api/values
         [HttpGet]
-        public IActionResult GetValues()
+        public async Task<IActionResult> GetValues()
         {
-            var values = this.dataContext.Values.ToList();
+            var values = await this.dataContext.Values.ToListAsync();
             return Ok(values);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public IActionResult GetValue(int id)
+        public async Task<IActionResult> GetValue(int id)
         {
-            var value = this.dataContext.Values.FirstOrDefault(x => x.Id == id);
+            var value = await this.dataContext.Values.FirstOrDefaultAsync(x => x.Id == id);
             return Ok(value);
         }
 
