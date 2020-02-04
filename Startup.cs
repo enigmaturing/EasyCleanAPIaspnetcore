@@ -27,8 +27,8 @@ namespace EasyClean.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // ToDo: In the next line, specify the correct connection string in the appsettings.json, when we have it
-            services.AddDbContext<DataContext>(x => x.UseSqlite("Connection string")); // Adds the class DataContext as a service
+            // ConnetionString specified in appsetings.json
+            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))); // Adds the class DataContext as a service
             services.AddControllers();
         }
 
