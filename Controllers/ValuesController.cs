@@ -20,9 +20,10 @@ namespace EasyClean.API.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IActionResult GetValues()
         {
-            return new string[] { "value1", "value2" };
+            var values = this.dataContext.Values.ToList();
+            return Ok(values);
         }
 
         // GET api/values/5
