@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyClean.API.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyClean.API.Controllers
@@ -10,6 +11,13 @@ namespace EasyClean.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly DataContext dataContext;
+
+        public ValuesController(DataContext dataContext)
+        {
+            this.dataContext = dataContext;
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
