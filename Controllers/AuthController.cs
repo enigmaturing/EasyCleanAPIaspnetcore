@@ -20,8 +20,6 @@ namespace EasyClean.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            // ToDo: Validate request
-
             // Avoid having two users with the same email, one containing capital
             // letters and one not
             userForRegisterDto.Email = userForRegisterDto.Email.ToLower();
@@ -39,6 +37,19 @@ namespace EasyClean.API.Controllers
             // Return 201 that means CreatedAtRoute, meaning that the user was created
             // and that it is available in a certain route of the API.
             return StatusCode(201); // ToDo: Return not only the code, but also the route where the user is available
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
+        {
+            var user = await this.repo.Login(userForLoginDto.Email, userForLoginDto.Password);
+
+            if (user == null)
+                return Unauthorized();
+
+            // ToDo: Generate a token if user was sucesssfully logged in
+
+            return Ok();
         }
     }
 }
