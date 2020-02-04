@@ -1,8 +1,14 @@
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using EasyClean.API.Data;
 using EasyClean.API.Dtos;
 using EasyClean.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EasyClean.API.Controllers
 {
@@ -11,10 +17,12 @@ namespace EasyClean.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository repo;
+        private readonly IConfiguration config;
 
-        public AuthController(IAuthRepository repo)
+        public AuthController(IAuthRepository repo, IConfiguration config)
         {
             this.repo = repo;
+            this.config = config;  // Inject IConfiguration from Startup.cs, so we can retrieve our token in method login
         }
 
         [HttpPost("register")]
@@ -25,13 +33,13 @@ namespace EasyClean.API.Controllers
             userForRegisterDto.Email = userForRegisterDto.Email.ToLower();
             if (await this.repo.UserExists(userForRegisterDto.Email))
                 return BadRequest("This email was already used to register another account");
-            
+
             // We can not assign the string password to userToCreate because the constructor
             // of the User class does not contain a porperty password of type string, but two
             // byte[] properties: passwordHash and passwordSalt. So, by the moment, we just
             // assign a value to the property Email and let the Register method of our repo
             // generate passwordHash and passwordSalt internally
-            var userToCreate = new User(){ Email = userForRegisterDto.Email };
+            var userToCreate = new User() { Email = userForRegisterDto.Email };
             var createdUser = this.repo.Register(userToCreate, userForRegisterDto.Password);
 
             // Return 201 that means CreatedAtRoute, meaning that the user was created
@@ -42,14 +50,55 @@ namespace EasyClean.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            var user = await this.repo.Login(userForLoginDto.Email, userForLoginDto.Password);
+            var user = await this.repo.Login(userForLoginDto.Email.ToLower(), userForLoginDto.Password);
 
             if (user == null)
                 return Unauthorized();
 
-            // ToDo: Generate a token if user was sucesssfully logged in
+            // Return a TOKEN when the user is logged in
+            // The token can be validatec by the server without making a DB call
+            // This means we can add bits of information to the token so that once
+            // the user is validated by the server, these bits of information can be
+            // retrieved witouht the need of acessing the DB. Those bits of information
+            // are called claims. We build up a token that contains the User's Id and the
+            // User's Email. We can define our claims as an array of objects of type Claim:
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email)
+            };
 
-            return Ok();
+            // We need a key to sign the token that we will send to the client, so that we can check that the token
+            // is a valid one when it comes back to the server. This key will be a hashed string so that it is not readable
+            // We have stored the not-hashed version of this tokenKey in our file appsettings.json to keep it private.
+            // To hash this string called tokenKey we will make use of the class SymmetricSecurityKey which accepts that
+            // tokenKey only as an array of bytes encoded in UTF8 format
+            var tokenKey = this.config.GetSection("AppSettings:TokenKey").Value;    // get the token from appsettings.json
+            var tokenEncodedUtf8 = Encoding.UTF8.GetBytes(tokenKey);                // get bytes of token in UTF8
+            var key = new SymmetricSecurityKey(tokenEncodedUtf8);                   // generate a hased key from those bytes
+
+            // Generate signing credentials with our generated key as part of the signing credentials. This takes the scurity
+            // key and the hashing algorithm that we will use to hash this particular key (SecurityAlgorithms.HmacSha512Signature)
+            var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            // Create a token descriptor, that will contain the following:
+            // - Claims
+            // - Signing credentials
+            // - Expiry date for our token
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                SigningCredentials = signingCredentials,
+                Expires = DateTime.Now.AddDays(1)
+            };
+
+            // Create a token handler
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            // Using our newly created token handler, we can create a token and pass him the token descriptor
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return Ok( new {token = tokenHandler.WriteToken(token)} );
         }
     }
 }
