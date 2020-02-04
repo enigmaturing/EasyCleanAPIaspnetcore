@@ -28,9 +28,10 @@ namespace EasyClean.API.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public IActionResult GetValue(int id)
         {
-            return "value";
+            var value = this.dataContext.Values.FirstOrDefault(x => x.Id == id);
+            return Ok(value);
         }
 
         // POST api/values
