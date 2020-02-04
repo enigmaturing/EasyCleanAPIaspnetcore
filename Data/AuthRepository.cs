@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using EasyClean.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasyClean.API.Data
 {
@@ -13,9 +14,47 @@ namespace EasyClean.API.Data
             this.dataContext = dataContext;
         }
 
-        public Task<User> Login(string email, string password)
+        /*
+            The method Login checks if a given email is present in the table Users of our DB and then if
+            the password given by the user is the same that is stored as a passowrdHash in the DB.
+            If both conditions are true, a proper instance of the class User is return. If not, a
+            value of null is returned
+        */
+        public async Task<User> Login(string email, string password)
         {
-            throw new System.NotImplementedException();
+            var user = await this.dataContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+
+            if (user == null)
+                return null;
+            
+            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+                return null;
+
+            return user;
+        }
+
+
+        /*
+             The method VerifyPasswordHash first computes the hash for the password of the user (given a
+             known passowrdSalt) and then compares it against the passwordHash stored in the DB.
+             If both are the same, this method returns true. Otherwise a value of false is returned.
+             NOTE that passwordHash is a aray of bytes, so we have to go through the array with a loop in
+            order to compare it
+         */
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            // ATTENTION: In this case, the passwordSalt is known, so we pass it to HMACSHA512 so hash is
+            // generated with that very salt
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != passwordHash[i])
+                        return false;
+                } 
+            }
+            return true;
         }
 
         public async Task<User> Register(User user, string password)
