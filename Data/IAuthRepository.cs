@@ -7,6 +7,6 @@ namespace EasyClean.API.Data
     {
          Task<User> Register(User user, string password);
          Task<User> Login(string email, string password);
-         Task<User> UserExists(string email);
+         Task<bool> UserExists(string email);
     }
 }

@@ -84,9 +84,20 @@ namespace EasyClean.API.Data
             }
         }
 
-        public Task<User> UserExists(string email)
+        /*
+            The method UserExists returns true if a given email is present in the table Users of our DB.
+            Otherwise it returns a value of false
+        */
+        public async Task<bool> UserExists(string email)
         {
-            throw new System.NotImplementedException();
+            if (await this.dataContext.Users.AnyAsync(x => x.Email == email))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
