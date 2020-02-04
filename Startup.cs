@@ -33,6 +33,10 @@ namespace EasyClean.API
             // Make the cors service available so we can use it as middleware in method Configure() 
             // The mehtod configure() is where our http request pipline is configured)
             services.AddCors(); 
+            // Add service so that we can inject the AuthRepository using the Repository Pattern for authentication
+            // With AddScoped<>(), an instance of the service is created once per http-request within the scope
+            // this is a compromise between AddSingletone() and AddTransient()
+            services.AddScoped<IAuthRepository, AuthRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
