@@ -50,8 +50,6 @@ namespace EasyClean.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            throw new Exception("Computer says no!");
-
             var user = await this.repo.Login(userForLoginDto.Email.ToLower(), userForLoginDto.Password);
 
             if (user == null)
