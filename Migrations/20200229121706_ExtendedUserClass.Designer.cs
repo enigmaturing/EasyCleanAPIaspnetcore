@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasyClean.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200226230610_ExtendedUserClass")]
+    [Migration("20200229121706_ExtendedUserClass")]
     partial class ExtendedUserClass
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,7 @@ namespace EasyClean.API.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -106,9 +106,11 @@ namespace EasyClean.API.Migrations
 
             modelBuilder.Entity("EasyClean.API.Models.Photo", b =>
                 {
-                    b.HasOne("EasyClean.API.Models.User", null)
+                    b.HasOne("EasyClean.API.Models.User", "User")
                         .WithMany("Photos")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
