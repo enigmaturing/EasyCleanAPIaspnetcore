@@ -36,7 +36,7 @@ namespace EasyClean.API
         {
             // ConnetionString specified in appsetings.json
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))); // Adds the class DataContext as a service
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             // Make the cors service available so we can use it as middleware in method Configure() 
             // The mehtod configure() is where our http request pipline is configured)
             services.AddCors(); 
@@ -44,6 +44,8 @@ namespace EasyClean.API
             // With AddScoped<>(), an instance of the service is created once per http-request within the scope
             // this is a compromise between AddSingletone() and AddTransient()
             services.AddScoped<IAuthRepository, AuthRepository>();
+            // Add service so that we can inject the EasyCleanRepository using the Repository Pattern for retrieving and deleting users
+            services.AddScoped<IEasyCleanRepository, EasyCleanRepository>();
             // Specify the schema that will be used for authentication:
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
