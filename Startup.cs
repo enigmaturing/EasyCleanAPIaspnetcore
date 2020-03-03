@@ -38,7 +38,7 @@ namespace EasyClean.API
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))); // Adds the class DataContext as a service
             services.AddControllers().AddNewtonsoftJson();
             // Make the cors service available so we can use it as middleware in method Configure() 
-            // The mehtod configure() is where our http request pipline is configured)
+            // The mehtod config©ure() is where our http request pipline is configured)
             services.AddCors(); 
             // Add service so that we can inject the AuthRepository using the Repository Pattern for authentication
             // With AddScoped<>(), an instance of the service is created once per http-request within the scope
