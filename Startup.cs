@@ -36,7 +36,11 @@ namespace EasyClean.API
         {
             // ConnetionString specified in appsetings.json
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))); // Adds the class DataContext as a service
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers().AddNewtonsoftJson(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling =
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
             // Make the cors service available so we can use it as middleware in method Configure() 
             // The mehtod config©ure() is where our http request pipline is configured)
             services.AddCors(); 
