@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using EasyClean.API.Data;
 using EasyClean.API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -44,6 +45,9 @@ namespace EasyClean.API
             // Make the cors service available so we can use it as middleware in method Configure() 
             // The mehtod config©ure() is where our http request pipline is configured)
             services.AddCors(); 
+            // Add automapper as a service so that the properties in our models are automatically mapped
+            // with the corresponding properties in our DTOs
+            services.AddAutoMapper(typeof(EasyCleanRepository).Assembly);
             // Add service so that we can inject the AuthRepository using the Repository Pattern for authentication
             // With AddScoped<>(), an instance of the service is created once per http-request within the scope
             // this is a compromise between AddSingletone() and AddTransient()
