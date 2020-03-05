@@ -12,12 +12,7 @@
       "Number": 65,
       "City": "Goettingen",
       "ZIP": 37040,
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/men/61.jpg",
-          "isMain": true
-        }
-      ],
+      "PhotoUrl": "https://randomuser.me/api/portraits/men/61.jpg",
       "Purchases": [
        {
          "PricePaid": 3.35,
@@ -50,12 +45,7 @@
       "Number": 20,
       "City": "Goettingen",
       "ZIP": 37029,
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/men/51.jpg",
-          "isMain": true
-        }
-      ]
+      "PhotoUrl": "https://randomuser.me/api/portraits/men/51.jpg"
     },
     {
       "Email": "louisahaley@neocent.com",
@@ -70,12 +60,7 @@
       "Number": 51,
       "City": "Goettingen",
       "ZIP": 37030,
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/men/91.jpg",
-          "isMain": true
-        }
-      ],
+      "PhotoUrl": "https://randomuser.me/api/portraits/men/91.jpg",
       "Purchases": [
         {
           "PricePaid": 5.72,
@@ -103,12 +88,7 @@
       "Number": 6,
       "City": "Goettingen",
       "ZIP": 37069,
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/men/81.jpg",
-          "isMain": true
-        }
-      ]
+      "PhotoUrl": "https://randomuser.me/api/portraits/men/81.jpg"
     },
     {
       "Email": "petersstout@sureplex.com",
@@ -123,12 +103,7 @@
       "Number": 45,
       "City": "Goettingen",
       "ZIP": 37039,
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/men/55.jpg",
-          "isMain": true
-        }
-      ]
+      "PhotoUrl": "https://randomuser.me/api/portraits/men/55.jpg"
     },
     {
       "Email": "bradshawbryant@senmao.com",
@@ -143,12 +118,7 @@
       "Number": 63,
       "City": "Goettingen",
       "ZIP": 37080,
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/men/50.jpg",
-          "isMain": true
-        }
-      ],
+      "PhotoUrl": "https://randomuser.me/api/portraits/men/50.jpg",
       "Purchases": [
         {
           "PricePaid": 7.49,
@@ -170,12 +140,7 @@
       "Number": 24,
       "City": "Goettingen",
       "ZIP": 37048,
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/men/23.jpg",
-          "isMain": true
-        }
-      ]
+      "PhotoUrl": "https://randomuser.me/api/portraits/men/23.jpg"
     },
     {
       "Email": "cathrynholman@bezal.com",
@@ -190,12 +155,7 @@
       "Number": 68,
       "City": "Goettingen",
       "ZIP": 37066,
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/men/14.jpg",
-          "isMain": true
-        }
-      ]
+      "PhotoUrl": "https://randomuser.me/api/portraits/men/14.jpg"
     },
     {
       "Email": "brandiebradshaw@sealoud.com",
@@ -210,12 +170,7 @@
       "Number": 43,
       "City": "Goettingen",
       "ZIP": 37092,
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/men/80.jpg",
-          "isMain": true
-        }
-      ]
+      "PhotoUrl": "https://randomuser.me/api/portraits/men/80.jpg"
     },
     {
       "Email": "manningsavage@kinetica.com",
@@ -230,12 +185,7 @@
       "Number": 81,
       "City": "Goettingen",
       "ZIP": 37064,
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/men/5.jpg",
-          "isMain": true
-        }
-      ]
+      "PhotoUrl": "https://randomuser.me/api/portraits/men/5.jpg"
     },
     {
         "Email": "janinepetty@netagy.com",
@@ -250,12 +200,7 @@
         "Number": 50,
         "City": "Goettingen",
         "ZIP": 37050,
-        "Photos": [
-        {
-            "url": "https://randomuser.me/api/portraits/women/47.jpg",
-            "isMain": true
-        }
-        ]
+        "PhotoUrl": "https://randomuser.me/api/portraits/women/47.jpg"
     },
     {
         "Email": "kathycompton@anocha.com",
@@ -270,12 +215,7 @@
         "Number": 26,
         "City": "Goettingen",
         "ZIP": 37063,
-        "Photos": [
-        {
-            "url": "https://randomuser.me/api/portraits/women/33.jpg",
-            "isMain": true
-        }
-        ]
+        "PhotoUrl": "https://randomuser.me/api/portraits/women/33.jpg"
     },
     {
         "Email": "bensonjohnson@extro.com",
@@ -290,12 +230,7 @@
         "Number": 14,
         "City": "Goettingen",
         "ZIP": 37030,
-        "Photos": [
-        {
-            "url": "https://randomuser.me/api/portraits/women/73.jpg",
-            "isMain": true
-        }
-        ]
+        "PhotoUrl": "https://randomuser.me/api/portraits/women/73.jpg"
     },
     {
         "Email": "petrawheeler@dentrex.com",
@@ -310,12 +245,7 @@
         "Number": 11,
         "City": "Goettingen",
         "ZIP": 37092,
-        "Photos": [
-        {
-            "url": "https://randomuser.me/api/portraits/women/34.jpg",
-            "isMain": true
-        }
-        ]
+        "PhotoUrl": "https://randomuser.me/api/portraits/women/34.jpg"
     },
     {
         "Email": "gladysdunn@ronelon.com",
@@ -330,12 +260,7 @@
         "Number": 83,
         "City": "Goettingen",
         "ZIP": 37071,
-        "Photos": [
-        {
-            "url": "https://randomuser.me/api/portraits/women/76.jpg",
-            "isMain": true
-        }
-        ]
+        "PhotoUrl": "https://randomuser.me/api/portraits/women/76.jpg"
     },
     {
         "Email": "salliedyer@bittor.com",
@@ -350,12 +275,7 @@
         "Number": 41,
         "City": "Goettingen",
         "ZIP": 37077,
-        "Photos": [
-        {
-            "url": "https://randomuser.me/api/portraits/women/62.jpg",
-            "isMain": true
-        }
-        ]
+        "PhotoUrl": "https://randomuser.me/api/portraits/women/62.jpg"
     },
     {
         "Email": "justinepatel@ezent.com",
@@ -370,12 +290,7 @@
         "Number": 60,
         "City": "Goettingen",
         "ZIP": 37024,
-        "Photos": [
-        {
-            "url": "https://randomuser.me/api/portraits/women/1.jpg",
-            "isMain": true
-        }
-        ]
+        "PhotoUrl": "https://randomuser.me/api/portraits/women/1.jpg"
     },
     {
         "Email": "changfrench@motovate.com",
@@ -390,12 +305,7 @@
         "Number": 24,
         "City": "Goettingen",
         "ZIP": 37099,
-        "Photos": [
-        {
-            "url": "https://randomuser.me/api/portraits/women/55.jpg",
-            "isMain": true
-        }
-        ]
+        "PhotoUrl": "https://randomuser.me/api/portraits/women/55.jpg"
     },
     {
         "Email": "tamerawood@dadabase.com",
@@ -410,12 +320,7 @@
         "Number": 86,
         "City": "Goettingen",
         "ZIP": 37048,
-        "Photos": [
-        {
-            "url": "https://randomuser.me/api/portraits/women/51.jpg",
-            "isMain": true
-        }
-        ]
+        "PhotoUrl": "https://randomuser.me/api/portraits/women/51.jpg"
     },
     {
         "Email": "kathiemathis@zentia.com",
@@ -430,12 +335,7 @@
         "Number": 29,
         "City": "Goettingen",
         "ZIP": 37031,
-        "Photos": [
-        {
-            "url": "https://randomuser.me/api/portraits/women/89.jpg",
-            "isMain": true
-        }
-        ],
+        "PhotoUrl": "https://randomuser.me/api/portraits/women/89.jpg",
         "Purchases": [
           {
             "PricePaid": 6.75,
