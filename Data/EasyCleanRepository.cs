@@ -34,7 +34,7 @@ namespace EasyClean.API.Data
             // IMPORTANT: We want to return also the photos of the user. The Photos
             // propierty is a navigation property and therefore we have to include
             // it specifically with Include(p => p.Photos)
-            var user = await this.dataContext.Users.Include(p => p.Photos).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await this.dataContext.Users.Include(p => p.Photos).Include(p => p.Purchases).FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
 
@@ -43,7 +43,7 @@ namespace EasyClean.API.Data
             // IMPORTANT: We want to return also the photos of the users. The Photos
             // propierty is a navigation property and therefore we have to include
             // it specifically with Include(p => p.Photos)
-            var users = await this.dataContext.Users.Include(p => p.Photos).ToListAsync();
+            var users = await this.dataContext.Users.Include(p => p.Photos).Include(p => p.Purchases).ToListAsync();
             return users;
         }
 

@@ -20,5 +20,6 @@ namespace EasyClean.API.Models
         public int ZIP { get; set; }
         public string City { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<Purchase> Purchases { get; set; }
     }
 }

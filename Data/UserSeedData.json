@@ -17,6 +17,24 @@
           "url": "https://randomuser.me/api/portraits/men/61.jpg",
           "isMain": true
         }
+      ],
+      "Purchases": [
+       {
+         "PricePaid": 3.35,
+         "DateOfPurchase": "2017-07-04",
+         "Machine": "Washingmachine"
+       }
+      ,
+      {
+        "PricePaid": 2.15,
+        "DateOfPurchase": "2017-07-01",
+        "Machine": "Washingmachine"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "Dryer"
+      }
       ]
     },
     {
@@ -57,7 +75,20 @@
           "url": "https://randomuser.me/api/portraits/men/91.jpg",
           "isMain": true
         }
-      ]
+      ],
+      "Purchases": [
+        {
+          "PricePaid": 5.72,
+          "DateOfPurchase": "2017-07-04",
+          "Machine": "Dryer"
+        }
+       ,
+       {
+         "PricePaid": 1.15,
+         "DateOfPurchase": "2017-07-01",
+         "Machine": "Washingmachine"
+       }
+       ]
     },
     {
       "Email": "gardnerstuart@medcom.com",
@@ -117,7 +148,14 @@
           "url": "https://randomuser.me/api/portraits/men/50.jpg",
           "isMain": true
         }
-      ]
+      ],
+      "Purchases": [
+        {
+          "PricePaid": 7.49,
+          "DateOfPurchase": "2017-05-01",
+          "Machine": "Washingmachine"
+        }
+       ]
     },
     {
       "Email": "fisherharrington@sybixtex.com",
@@ -397,6 +435,40 @@
             "url": "https://randomuser.me/api/portraits/women/89.jpg",
             "isMain": true
         }
-        ]
+        ],
+        "Purchases": [
+          {
+            "PricePaid": 6.75,
+            "DateOfPurchase": "2017-07-04",
+            "Machine": "Dryer"
+          }
+         ,
+         {
+           "PricePaid": 2.15,
+           "DateOfPurchase": "2017-07-01",
+           "Machine": "Washingmachine"
+         },
+         {
+           "PricePaid": 5.35,
+           "DateOfPurchase": "2017-06-24",
+           "Machine": "Dryer"
+         },
+         {
+          "PricePaid": 6.75,
+          "DateOfPurchase": "2017-03-04",
+          "Machine": "Dryer"
+        }
+       ,
+       {
+         "PricePaid": 10.15,
+         "DateOfPurchase": "2017-01-01",
+         "Machine": "Washingmachine"
+       },
+       {
+         "PricePaid": 4.35,
+         "DateOfPurchase": "2017-06-05",
+         "Machine": "Dryer"
+       }
+         ]
     }
   ]
