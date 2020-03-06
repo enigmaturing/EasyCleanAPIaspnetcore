@@ -13,6 +13,7 @@ namespace EasyClean.API.Dtos
         public int Number { get; set; }
         public int ZIP { get; set; }
         public string City { get; set; }
+        public double RemainingCredit { get; set; }
         public string PhotoUrl { get; set; }
     }
 }
