@@ -22,5 +22,6 @@ namespace EasyClean.API.Models
         public string PhotoUrl { get; set; }
         public double RemainingCredit { get; set; }
         public ICollection<Purchase> Purchases { get; set; }
+        public ICollection<Topup> Topups { get; set; }
     }
 }

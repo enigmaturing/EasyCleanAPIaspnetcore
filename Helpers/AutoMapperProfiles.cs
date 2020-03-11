@@ -14,6 +14,7 @@ namespace EasyClean.API.Helpers
                 opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
             CreateMap<User, UserForDetailedDto>();
             CreateMap<Purchase, PurchasesForDetailedDto>();
+            CreateMap<Topup, TopupsForDetailedDto>();
         }
     }
 }

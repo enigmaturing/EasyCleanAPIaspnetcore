@@ -18,19 +18,122 @@
        {
          "PricePaid": 3.35,
          "DateOfPurchase": "2017-07-04",
-         "Machine": "Washingmachine"
+         "Machine": "washingmachine"
        }
       ,
       {
         "PricePaid": 2.15,
         "DateOfPurchase": "2017-07-01",
-        "Machine": "Washingmachine"
+        "Machine": "washingmachine"
+      }
+      ,
+      {
+        "PricePaid": 2.15,
+        "DateOfPurchase": "2017-07-01",
+        "Machine": "washingmachine"
       },
       {
         "PricePaid": 5.35,
         "DateOfPurchase": "2017-06-24",
-        "Machine": "Dryer"
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "carwashtunnel"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 2.15,
+        "DateOfPurchase": "2017-07-01",
+        "Machine": "washingmachine"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "carwashtunnel"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 2.15,
+        "DateOfPurchase": "2017-07-01",
+        "Machine": "washingmachine"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "carwashtunnel"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "carwashtunnel"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
+      },
+      {
+        "PricePaid": 5.35,
+        "DateOfPurchase": "2017-06-24",
+        "Machine": "dryer"
       }
+      ],
+      "Topups": [
+        {
+          "Amount": 10.00,
+          "DateOfTopup": "2017-07-04",
+          "NameOfEmployee": "Sandra Mueller"
+        },
+        {
+          "Amount": 5.00,
+          "DateOfTopup": "2017-03-02",
+          "NameOfEmployee": "Olivia Newton"
+        }
       ]
     },
     {
@@ -66,14 +169,45 @@
         {
           "PricePaid": 5.72,
           "DateOfPurchase": "2017-07-04",
-          "Machine": "Dryer"
-        }
-       ,
+          "Machine": "dryer"
+        },
        {
          "PricePaid": 1.15,
          "DateOfPurchase": "2017-07-01",
-         "Machine": "Washingmachine"
+         "Machine": "washingmachine"
        }
+       ],
+       "Topups": [
+         {
+           "Amount": 20.00,
+           "DateOfTopup": "2017-06-04",
+           "NameOfEmployee": "Sandra Mueller"
+         },
+         {
+           "Amount": 15.00,
+           "DateOfTopup": "2017-03-01",
+           "NameOfEmployee": "Olivia Newton"
+         },
+         {
+           "Amount": 10.00,
+           "DateOfTopup": "2017-02-01",
+           "NameOfEmployee": "Olivia Newton"
+         },
+         {
+           "Amount": 10.00,
+           "DateOfTopup": "2017-01-01",
+           "NameOfEmployee": "Olivia Newton"
+         },
+         {
+           "Amount": 25.00,
+           "DateOfTopup": "2016-12-12",
+           "NameOfEmployee": "Olivia Newton"
+         },
+         {
+           "Amount": 15.00,
+           "DateOfTopup": "2016-10-05",
+           "NameOfEmployee": "Olivia Newton"
+         }
        ]
     },
     {
@@ -127,7 +261,7 @@
         {
           "PricePaid": 7.49,
           "DateOfPurchase": "2017-05-01",
-          "Machine": "Washingmachine"
+          "Machine": "washingmachine"
         }
        ]
     },
@@ -347,35 +481,47 @@
           {
             "PricePaid": 6.75,
             "DateOfPurchase": "2017-07-04",
-            "Machine": "Dryer"
+            "Machine": "dryer"
           }
          ,
          {
            "PricePaid": 2.15,
            "DateOfPurchase": "2017-07-01",
-           "Machine": "Washingmachine"
+           "Machine": "washingmachine"
          },
          {
            "PricePaid": 5.35,
            "DateOfPurchase": "2017-06-24",
-           "Machine": "Dryer"
+           "Machine": "dryer"
          },
          {
           "PricePaid": 6.75,
           "DateOfPurchase": "2017-03-04",
-          "Machine": "Dryer"
+          "Machine": "dryer"
         }
        ,
        {
          "PricePaid": 10.15,
          "DateOfPurchase": "2017-01-01",
-         "Machine": "Washingmachine"
+         "Machine": "washingmachine"
        },
        {
          "PricePaid": 4.35,
          "DateOfPurchase": "2017-06-05",
-         "Machine": "Dryer"
+         "Machine": "dryer"
        }
-         ]
+      ],
+      "Topups": [
+        {
+          "Amount": 10.00,
+          "DateOfTopup": "2017-07-04",
+          "NameOfEmployee": "Sandra Mueller"
+        },
+        {
+          "Amount": 5.00,
+          "DateOfTopup": "2017-03-02",
+          "NameOfEmployee": "Olivia Newton"
+        }
+      ]
     }
   ]

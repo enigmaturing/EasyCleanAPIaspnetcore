@@ -21,5 +21,6 @@ namespace EasyClean.API.Dtos
         public string PhotoUrl { get; set; }
         public double RemainingCredit { get; set; }
         public ICollection<PurchasesForDetailedDto> Purchases { get; set; }
+        public ICollection<TopupsForDetailedDto> Topups { get; set; }
     }
 }
