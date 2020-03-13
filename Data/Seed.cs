@@ -13,7 +13,7 @@ namespace EasyClean.API.Data
             {
                 var userData = System.IO.File.ReadAllText("Data/UserSeedData.json"); // Read contents of the file
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);     // Deserialize it into a list of users
-                foreach (var user in users)         // Store each of de deserialized user objects into de table Users of our DB
+                foreach (var user in users)         // Store each of the deserialized user-objects into de table Users of our DB
                 {
                     byte[] passwordHash, passwordSalt;
                     CreatePasswordHash("password", out passwordHash, out passwordSalt);
@@ -26,6 +26,20 @@ namespace EasyClean.API.Data
                 // once (when our application starts). So there is no way that there is more than one
                 // user saving changes at the same time by the time this is called. Therefore, we dont
                 // need an async call here
+                dataContext.SaveChanges(); // Save sinchronouslly
+            }
+        }
+
+        public static void SeedMachineGroups(DataContext dataContext)
+        {
+            if (!dataContext.MachineGroups.Any()) 
+            {
+                var machineGroupData = System.IO.File.ReadAllText("Data/MachineGroupSeedData.json"); // Read contents of the file
+                var machineGroups = JsonConvert.DeserializeObject<List<MachineGroup>>(machineGroupData);     // Deserialize it into a list of machineGroups
+                foreach (var machineGroup in machineGroups)         // Store each of the deserialized machineGroup-objects into de table MachineGroups of our DB
+                {
+                    dataContext.MachineGroups.Add(machineGroup);
+                }
                 dataContext.SaveChanges(); // Save sinchronouslly
             }
         }

@@ -24,6 +24,7 @@ namespace EasyClean.API
                     var dataContext = services.GetRequiredService<DataContext>();
                     dataContext.Database.Migrate();  // Apply any pending migration and create DB if it does not exist
                     Seed.SeedUsers(dataContext);
+                    Seed.SeedMachineGroups(dataContext);
                 }
                 catch (Exception ex)
                 {

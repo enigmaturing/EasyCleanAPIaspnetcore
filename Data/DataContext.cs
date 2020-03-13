@@ -8,7 +8,10 @@ namespace EasyClean.API.Data
         public DataContext(DbContextOptions<DataContext> options): base(options) { }
         
         public DbSet<User> Users { get; set; }
-        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<MachineUsage> MachineUsages { get; set; }
+        public DbSet<MachineGroup> MachineGroups { get; set; }
+        public DbSet<Tariff> Tariffs { get; set; }
         public DbSet<Topup> Topups { get; set; }
+        public DbSet<Machine> Machines { get; set; }
     }
 }
