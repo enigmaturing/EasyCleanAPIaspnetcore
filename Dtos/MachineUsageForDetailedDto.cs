@@ -2,7 +2,7 @@ using System;
 
 namespace EasyClean.API.Dtos
 {
-    public class MachineUsageForListDto
+    public class MachineUsageForDetailedDto
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

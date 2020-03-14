@@ -13,7 +13,7 @@ namespace EasyClean.API.Helpers
                 .ForMember(dest => dest.Age, opt => 
                 opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
             CreateMap<User, UserForDetailedDto>();
-             CreateMap<MachineUsage, MachineUsageForListDto>()
+             CreateMap<MachineUsage, MachineUsageForDetailedDto>()
                 .ForMember(dest => dest.IconUrl, opt => 
                 opt.MapFrom(src => src.Machine.MachineGroup.IconUrl))
                 .ForMember(dest => dest.TotalDurationInMinutes, opt =>

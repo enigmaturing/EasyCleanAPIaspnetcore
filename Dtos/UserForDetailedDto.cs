@@ -20,7 +20,7 @@ namespace EasyClean.API.Dtos
         public string City { get; set; }
         public string PhotoUrl { get; set; }
         public double RemainingCredit { get; set; }
-        public ICollection<MachineUsageForListDto> MachineUsages { get; set; }
+        public ICollection<MachineUsageForDetailedDto> MachineUsages { get; set; }
         public ICollection<TopupsForDetailedDto> Topups { get; set; }
     }
 }
