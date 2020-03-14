@@ -188,5 +188,157 @@
     ],
     "TypeName": "Dryer",
     "IconUrl": "http://www.javiergonzalez.de/easyclean/dryer.png"
+  },
+  {
+    "Machines": [
+      {
+        "MachineUsages":  [
+          {
+            "Date": "2017-07-04",
+            "QuantityOfServicesBooked": 1,
+            "TariffId": 5,
+            "UserId": 1
+          },
+          {
+            "Date": "2017-07-05",
+            "QuantityOfServicesBooked": 1,
+            "TariffId": 6,
+            "UserId": 2
+          }
+        ],
+        "IsBlocked": false,
+        "LabeledAs": 1
+      }
+    ],
+    "Tariffs": [
+      {
+        "Price": 6.50,
+        "DurationInMinutes": 15,
+        "Name": "Water and Soap",
+        "IsActive": true
+      },
+      {
+        "Price": 12.00,
+        "DurationInMinutes": 25,
+        "Name": "Water, Soap and Polish",
+        "IsActive": true
+      }
+    ],
+    "TypeName": "Automatic Carwash",
+    "IconUrl": "http://www.javiergonzalez.de/easyclean/automaticcarwash.png"
+  },
+  {
+    "Machines": [
+      {
+        "MachineUsages":  [
+          {
+            "Date": "2017-07-04",
+            "QuantityOfServicesBooked": 1,
+            "TariffId": 7,
+            "UserId": 1
+          },
+          {
+            "Date": "2017-07-05",
+            "QuantityOfServicesBooked": 1,
+            "TariffId": 8,
+            "UserId": 2
+          }
+        ],
+        "IsBlocked": false,
+        "LabeledAs": 1
+      }
+    ],
+    "Tariffs": [
+      {
+        "Price": 18.50,
+        "DurationInMinutes": 15,
+        "Name": "Water and Soap (Manual)",
+        "IsActive": true
+      },
+      {
+        "Price": 25.00,
+        "DurationInMinutes": 25,
+        "Name": "Water, Soap and Polish (Manual)",
+        "IsActive": true
+      }
+    ],
+    "TypeName": "Car-Cleaning",
+    "IconUrl": "http://www.javiergonzalez.de/easyclean/carcleaning.png"
+  },
+  {
+    "Machines": [
+      {
+        "MachineUsages":  [
+          {
+            "Date": "2017-07-04",
+            "QuantityOfServicesBooked": 1,
+            "TariffId": 5,
+            "UserId": 1
+          },
+          {
+            "Date": "2017-07-05",
+            "QuantityOfServicesBooked": 1,
+            "TariffId": 6,
+            "UserId": 2
+          }
+        ],
+        "IsBlocked": false,
+        "LabeledAs": 1
+      }
+    ],
+    "Tariffs": [
+      {
+        "Price": 1.50,
+        "DurationInMinutes": 7,
+        "Name": "5 min vaccumcleanning",
+        "IsActive": true
+      },
+      {
+        "Price": 2.50,
+        "DurationInMinutes": 8,
+        "Name": "10 min vaccumcleanning",
+        "IsActive": true
+      }
+    ],
+    "TypeName": "Vaccumcleaner",
+    "IconUrl": "http://www.javiergonzalez.de/easyclean/vaccumcleaner.png"
+  },
+  {
+    "Machines": [
+      {
+        "MachineUsages":  [
+          {
+            "Date": "2017-07-04",
+            "QuantityOfServicesBooked": 1,
+            "TariffId": 9,
+            "UserId": 1
+          },
+          {
+            "Date": "2017-07-05",
+            "QuantityOfServicesBooked": 1,
+            "TariffId": 10,
+            "UserId": 2
+          }
+        ],
+        "IsBlocked": false,
+        "LabeledAs": 1
+      }
+    ],
+    "Tariffs": [
+      {
+        "Price": 4.50,
+        "DurationInMinutes": 5,
+        "Name": "5 min ironing",
+        "IsActive": true
+      },
+      {
+        "Price": 2.50,
+        "DurationInMinutes": 8,
+        "Name": "8 min ironing",
+        "IsActive": true
+      }
+    ],
+    "TypeName": "Iron",
+    "IconUrl": "http://www.javiergonzalez.de/easyclean/iron.png"
   }
 ]
