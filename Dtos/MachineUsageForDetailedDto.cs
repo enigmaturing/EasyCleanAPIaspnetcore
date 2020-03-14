@@ -11,5 +11,9 @@ namespace EasyClean.API.Dtos
         public string IconUrl { get; set; }
         public double TotalAmountPaid { get; set; }
         public int TotalDurationInMinutes { get; set; }
+        public string TariffName { get; set; }
+        public int QuantityOfServicesBooked { get; set; }
+        public double PricePerServiceBooked { get; set; }
+        public int DurationPerServiceBooked { get; set; }
     }
 }

@@ -21,7 +21,15 @@ namespace EasyClean.API.Helpers
                 .ForMember(dest => dest.TotalAmountPaid, opt =>
                 opt.MapFrom(src => src.QuantityOfServicesBooked * src.Tariff.Price))
                 .ForMember(dest => dest.MachineLabeledAs, opt =>
-                opt.MapFrom(src => src.Machine.LabeledAs));
+                opt.MapFrom(src => src.Machine.LabeledAs))
+                .ForMember(dest => dest.TariffName, opt =>
+                opt.MapFrom(src => src.Tariff.Name))
+                .ForMember(dest => dest.QuantityOfServicesBooked, opt =>
+                opt.MapFrom(src => src.QuantityOfServicesBooked))
+                .ForMember(dest => dest.PricePerServiceBooked, opt =>
+                opt.MapFrom(src => src.Tariff.Price))
+                .ForMember(dest => dest.DurationPerServiceBooked, opt =>
+                opt.MapFrom(src => src.Tariff.DurationInMinutes));
             CreateMap<Topup, TopupsForDetailedDto>();
         }
     }

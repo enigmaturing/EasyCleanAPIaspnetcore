@@ -6,61 +6,61 @@
           {
             "Date": "2017-07-04",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 8,
             "UserId": 1
           },
           {
             "Date": "2017-07-03",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 2,
+            "TariffId": 8,
             "UserId": 3
           },
           {
             "Date": "2017-07-02",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 8,
             "UserId": 5
           },
           {
             "Date": "2017-07-02",
             "QuantityOfServicesBooked": 4,
-            "TariffId": 1,
+            "TariffId": 9,
             "UserId": 8
           },
           {
             "Date": "2017-07-02",
             "QuantityOfServicesBooked": 2,
-            "TariffId": 1,
+            "TariffId": 9,
             "UserId": 19
           },
           {
             "Date": "2017-07-01",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 9,
             "UserId": 5
           },
           {
             "Date": "2017-06-15",
             "QuantityOfServicesBooked": 3,
-            "TariffId": 1,
+            "TariffId": 8,
             "UserId": 7
           },
           {
             "Date": "2017-06-11",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 8,
             "UserId": 2
           },
           {
             "Date": "2017-06-11",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 9,
             "UserId": 6
           },
           {
             "Date": "2017-06-09",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 8,
             "UserId": 1
           }
         ],
@@ -72,61 +72,61 @@
           {
             "Date": "2017-07-01",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 8,
             "UserId": 3
           },
           {
             "Date": "2017-07-02",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 2,
+            "TariffId": 9,
             "UserId": 3
           },
           {
             "Date": "2017-06-02",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 8,
             "UserId": 4
           },
           {
             "Date": "2017-07-02",
             "QuantityOfServicesBooked": 4,
-            "TariffId": 1,
+            "TariffId": 9,
             "UserId": 9
           },
           {
             "Date": "2017-07-02",
             "QuantityOfServicesBooked": 2,
-            "TariffId": 1,
+            "TariffId": 9,
             "UserId": 17
           },
           {
             "Date": "2017-07-01",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 9,
             "UserId": 3
           },
           {
             "Date": "2017-06-15",
             "QuantityOfServicesBooked": 3,
-            "TariffId": 1,
+            "TariffId": 8,
             "UserId": 12
           },
           {
             "Date": "2017-06-11",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 9,
             "UserId": 11
           },
           {
             "Date": "2017-06-11",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 8,
             "UserId": 6
           },
           {
             "Date": "2017-06-09",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 1,
+            "TariffId": 8,
             "UserId": 1
           }
         ],
@@ -158,13 +158,13 @@
           {
             "Date": "2017-07-04",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 2,
+            "TariffId": 1,
             "UserId": 1
           },
           {
             "Date": "2017-07-05",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 2,
+            "TariffId": 10,
             "UserId": 1
           }
         ],
@@ -202,7 +202,7 @@
           {
             "Date": "2017-07-05",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 6,
+            "TariffId": 7,
             "UserId": 2
           }
         ],
@@ -234,13 +234,13 @@
           {
             "Date": "2017-07-04",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 7,
+            "TariffId": 4,
             "UserId": 1
           },
           {
             "Date": "2017-07-05",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 8,
+            "TariffId": 11,
             "UserId": 2
           }
         ],
@@ -272,13 +272,13 @@
           {
             "Date": "2017-07-04",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 5,
+            "TariffId": 2,
             "UserId": 1
           },
           {
             "Date": "2017-07-05",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 6,
+            "TariffId": 3,
             "UserId": 2
           }
         ],
@@ -310,13 +310,13 @@
           {
             "Date": "2017-07-04",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 9,
+            "TariffId": 6,
             "UserId": 1
           },
           {
             "Date": "2017-07-05",
             "QuantityOfServicesBooked": 1,
-            "TariffId": 10,
+            "TariffId": 12,
             "UserId": 2
           }
         ],
