@@ -31,19 +31,21 @@ namespace EasyClean.API.Data
 
         public async Task<User> GetUser(int id)
         {
-            // IMPORTANT: We want to return also the photos of the user. The Photos
-            // propierty is a navigation property and therefore we have to include
-            // it specifically with Include(p => p.Photos)
-            var user = await this.dataContext.Users.Include(m => m.MachineUsages).Include(t => t.Topups).FirstOrDefaultAsync(u => u.Id == id);
+            // IMPORTANT: We want to return also navigation properties and therefore we have
+            // to include it specifically with Include(user => user.MachineUsages)
+            var user = await this.dataContext.Users.Include(user => user.MachineUsages)
+                                                   .ThenInclude(machineUsage => machineUsage.Machine)
+                                                   .ThenInclude(machine => machine.MachineGroup)
+                                                   .ThenInclude(machineUsage => machineUsage.Tariffs)
+                                                   .Include(user => user.Topups).FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
 
         public async Task<IEnumerable<User>> GetUsers()
         {
-            // IMPORTANT: We want to return also the photos of the users. The Photos
-            // propierty is a navigation property and therefore we have to include
-            // it specifically with Include(p => p.Photos)
-            var users = await this.dataContext.Users.Include(m => m.MachineUsages).Include(t => t.Topups).ToListAsync();
+            // IMPORTANT: We want to return also navigation properties and therefore we have
+            // to include it specifically with Include(user => user.MachineUsages)
+            var users = await this.dataContext.Users.Include(user => user.MachineUsages).Include(t => t.Topups).ToListAsync();
             return users;
         }
 
