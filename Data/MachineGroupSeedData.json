@@ -149,7 +149,7 @@
       }
     ],
     "TypeName": "Washingmachine",
-    "IconUrl": "https://randomuser.me/api/portraits/men/61.jpg"
+    "IconUrl": "http://www.javiergonzalez.de/easyclean/washingmachine.png"
   },
   {
     "Machines": [
@@ -187,6 +187,6 @@
       }
     ],
     "TypeName": "Dryer",
-    "IconUrl": "https://randomuser.me/api/portraits/men/60.jpg"
+    "IconUrl": "http://www.javiergonzalez.de/easyclean/dryer.png"
   }
 ]
