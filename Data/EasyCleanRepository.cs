@@ -34,9 +34,10 @@ namespace EasyClean.API.Data
             // IMPORTANT: We want to return also navigation properties and therefore we have
             // to include it specifically with Include(user => user.MachineUsages)
             var user = await this.dataContext.Users.Include(user => user.MachineUsages)
-                                                   .ThenInclude(machineUsage => machineUsage.Machine)
-                                                   .ThenInclude(machine => machine.MachineGroup)
-                                                   .ThenInclude(machineUsage => machineUsage.Tariffs)
+                                                        .ThenInclude(machineUsage => machineUsage.Machine)
+                                                            .ThenInclude(machine => machine.MachineGroup)
+                                                   .Include(user => user.MachineUsages)
+                                                        .ThenInclude(machineUsage => machineUsage.Tariff)
                                                    .Include(user => user.Topups).FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
