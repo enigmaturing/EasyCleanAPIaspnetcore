@@ -11,5 +11,9 @@ namespace EasyClean.API.Data
          Task<bool> SaveAll();
          Task<IEnumerable<User>> GetUsers();
          Task<User> GetUser(int id);
+         Task<IEnumerable<Machine>> GetMachines();
+         
+         // ToDo: include method GetMachine(int id)
+         //Task<Machine> GetMachine(int id);
     }
 }

@@ -50,6 +50,12 @@ namespace EasyClean.API.Data
             return users;
         }
 
+        public async Task<IEnumerable<Machine>> GetMachines()
+        {
+            var machines = await this.dataContext.Machines.Include(machine => machine.MachineGroup).Include(machine => machine.MachineUsages).ToListAsync();
+            return machines;
+        }
+
         public async Task<bool> SaveAll()
         {
             // Return true if saved items are greater than zero
