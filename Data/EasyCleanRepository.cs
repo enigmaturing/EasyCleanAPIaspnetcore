@@ -29,6 +29,14 @@ namespace EasyClean.API.Data
             this.dataContext.Remove(entity);
         }
 
+        public async Task<IEnumerable<MachineGroup>> GetMachineGroups()
+        {
+           var machines = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
+                                                              .Include(machineGroup => machineGroup.Tariffs)
+                                                              .ToListAsync();
+            return machines;
+        }
+
         public async Task<User> GetUser(int id)
         {
             // IMPORTANT: We want to return also navigation properties and therefore we have

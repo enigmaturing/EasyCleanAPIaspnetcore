@@ -31,6 +31,7 @@ namespace EasyClean.API.Helpers
                 .ForMember(dest => dest.DurationPerServiceBooked, opt =>
                 opt.MapFrom(src => src.Tariff.DurationInMinutes));
             CreateMap<Topup, TopupsForDetailedDto>();
+            CreateMap<MachineGroup, MachineGroupForListDto>();
         }
     }
 }
