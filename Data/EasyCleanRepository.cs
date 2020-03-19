@@ -37,6 +37,14 @@ namespace EasyClean.API.Data
             return machines;
         }
 
+        public async Task<IEnumerable<MachineUsage>> GetMachineUsages()
+        {
+            var machineUsages = await this.dataContext.MachineUsages.Include(machineUsage => machineUsage.Machine)
+                                                                        .ThenInclude(machine => machine.MachineGroup)
+                                                                    .Include(machineUsage => machineUsage.Tariff).ToListAsync();
+            return machineUsages;
+        }
+
         public async Task<User> GetUser(int id)
         {
             // IMPORTANT: We want to return also navigation properties and therefore we have

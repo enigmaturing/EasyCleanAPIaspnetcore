@@ -12,5 +12,6 @@ namespace EasyClean.API.Data
          Task<IEnumerable<User>> GetUsers();
          Task<User> GetUser(int id);
          Task<IEnumerable<MachineGroup>> GetMachineGroups();
+         Task<IEnumerable<MachineUsage>> GetMachineUsages();
     }
 }
