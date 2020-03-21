@@ -148,7 +148,7 @@
         "IsActive": true
       }
     ],
-    "TypeName": "Washingmachine",
+    "TypeName": "Washingmachines",
     "IconUrl": "http://www.javiergonzalez.de/easyclean/washingmachine.png"
   },
   {
@@ -186,7 +186,7 @@
         "IsActive": true
       }
     ],
-    "TypeName": "Dryer",
+    "TypeName": "Dryers",
     "IconUrl": "http://www.javiergonzalez.de/easyclean/dryer.png"
   },
   {
@@ -224,7 +224,7 @@
         "IsActive": true
       }
     ],
-    "TypeName": "Automatic Carwash",
+    "TypeName": "Automatic Carwash Stations",
     "IconUrl": "http://www.javiergonzalez.de/easyclean/automaticcarwash.png"
   },
   {
@@ -262,7 +262,7 @@
         "IsActive": true
       }
     ],
-    "TypeName": "Car-Cleaning",
+    "TypeName": "Self Carwash Stations",
     "IconUrl": "http://www.javiergonzalez.de/easyclean/carcleaning.png"
   },
   {
@@ -300,7 +300,7 @@
         "IsActive": true
       }
     ],
-    "TypeName": "Vaccumcleaner",
+    "TypeName": "Vaccumcleaners",
     "IconUrl": "http://www.javiergonzalez.de/easyclean/vaccumcleaner.png"
   },
   {
@@ -338,7 +338,7 @@
         "IsActive": true
       }
     ],
-    "TypeName": "Iron",
+    "TypeName": "Irons",
     "IconUrl": "http://www.javiergonzalez.de/easyclean/iron.png"
   }
 ]
