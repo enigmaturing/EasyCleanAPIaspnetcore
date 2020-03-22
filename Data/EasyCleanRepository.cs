@@ -29,6 +29,14 @@ namespace EasyClean.API.Data
             this.dataContext.Remove(entity);
         }
 
+        public async Task<MachineGroup> GetMachineGroup(int id)
+        {
+            var machineGroup = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
+                                                                   .Include(machineGroup => machineGroup.Tariffs)
+                                                                   .FirstOrDefaultAsync(machine => machine.Id == id);
+            return machineGroup;
+        }
+
         public async Task<IEnumerable<MachineGroup>> GetMachineGroups()
         {
            var machines = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
