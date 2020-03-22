@@ -32,6 +32,7 @@ namespace EasyClean.API.Helpers
                 opt.MapFrom(src => src.Tariff.DurationInMinutes));
             CreateMap<Topup, TopupsForDetailedDto>();
             CreateMap<MachineGroup, MachineGroupForListDto>();
+            CreateMap<TariffForCreationDto, Tariff>();
         }
     }
 }
