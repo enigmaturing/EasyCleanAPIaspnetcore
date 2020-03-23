@@ -53,6 +53,27 @@ namespace EasyClean.API.Data
             return machineUsages;
         }
 
+        public async Task<IEnumerable<Tariff>> GetTariffs()
+        {
+            var tariffs = await this.dataContext.Tariffs.Include(tariff => tariff.MachineGroup)
+                                                        .ToListAsync();
+            return tariffs;
+        }
+
+        public async Task<IEnumerable<Tariff>> GetTariffsOfMachineGroup(int id)
+        {
+            var machineGroups = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
+                                                                    .Include(machineGroup => machineGroup.Tariffs)
+                                                                    .FirstOrDefaultAsync(u => u.Id == id);
+            return machineGroups.Tariffs;
+        }
+
+        public async Task<Tariff> GetTariff(int id)
+        {
+            var tariff = await this.dataContext.Tariffs.FirstOrDefaultAsync(u => u.Id == id);
+            return tariff;
+        }
+        
         public async Task<User> GetUser(int id)
         {
             // IMPORTANT: We want to return also navigation properties and therefore we have

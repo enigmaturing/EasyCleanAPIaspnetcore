@@ -41,5 +41,26 @@ namespace EasyClean.API.Controllers
 
             throw new Exception("Creating the tariff failed on save");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTariffs()
+        {
+            var tariffs = await this.repo.GetTariffs();
+            return Ok(tariffs);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTariff(int id)
+        {
+            var tariffs = await this.repo.GetTariff(id);
+            return Ok(tariffs);
+        }
+
+        [HttpGet("machinegroup/{id}")]
+        public async Task<IActionResult> GetTariffsOfMachineGroup(int id)
+        {
+            var tariffs = await this.repo.GetTariffsOfMachineGroup(id);
+            return Ok(tariffs);
+        }
     }
 }
