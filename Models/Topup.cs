@@ -8,7 +8,7 @@ namespace EasyClean.API.Models
         public double Amount { get; set; }
         public DateTime DateOfTopup { get; set; }
         public string NameOfEmployee { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; } // virtual: it is a navegation propery and needs to be lazy loaded
         public int UserId { get; set; }
     }
 }

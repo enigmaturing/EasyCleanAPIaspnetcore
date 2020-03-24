@@ -37,14 +37,20 @@ namespace EasyClean.API
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             // Add the class DataContext as a service
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));  // ConnetionString specified in appsetings.Develpment.json 
+            services.AddDbContext<DataContext>(x => {
+                x.UseLazyLoadingProxies();
+                x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));  // ConnetionString specified in appsetings.Develpment.json 
+            });
             ConfigureServices(services); // With the generated services, call the method Configure services present in this class
         }
 
         public void ConfigureProductionServices(IServiceCollection services)
         {
             // Add the class DataContext as a service
-            services.AddDbContext<DataContext>(x => x.UseMySql(Configuration.GetConnectionString("DefaultConnection"))); // ConnetionString specified in appsetings.json
+            services.AddDbContext<DataContext>(x => {
+                x.UseLazyLoadingProxies();
+                x.UseMySql(Configuration.GetConnectionString("DefaultConnection"));  // ConnetionString specified in appsetings.json 
+            });
             ConfigureServices(services); // With the generated services, call the method Configure services present in this class
         }
 

@@ -21,7 +21,7 @@ namespace EasyClean.API.Models
         public string City { get; set; }
         public string PhotoUrl { get; set; }
         public double RemainingCredit { get; set; }
-        public ICollection<MachineUsage> MachineUsages { get; set; }
-        public ICollection<Topup> Topups { get; set; }
+        public virtual ICollection<MachineUsage> MachineUsages { get; set; } // virtual: this is a navegation propery and needs to be lazy loaded
+        public virtual ICollection<Topup> Topups { get; set; } // virtual: this is a navegation propery and needs to be lazy loaded
     }
 }
