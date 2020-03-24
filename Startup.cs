@@ -33,10 +33,24 @@ namespace EasyClean.API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            // Add the class DataContext as a service
+            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));  // ConnetionString specified in appsetings.Develpment.json 
+            ConfigureServices(services); // With the generated services, call the method Configure services present in this class
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            // Add the class DataContext as a service
+            services.AddDbContext<DataContext>(x => x.UseMySql(Configuration.GetConnectionString("DefaultConnection"))); // ConnetionString specified in appsetings.json
+            ConfigureServices(services); // With the generated services, call the method Configure services present in this class
+        }
+
+
         public void ConfigureServices(IServiceCollection services)
         {
-            // ConnetionString specified in appsetings.json
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))); // Adds the class DataContext as a service
             services.AddControllers().AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.ReferenceLoopHandling =
