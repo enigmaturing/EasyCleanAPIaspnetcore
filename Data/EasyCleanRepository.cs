@@ -31,31 +31,40 @@ namespace EasyClean.API.Data
 
         public async Task<MachineGroup> GetMachineGroup(int id)
         {
-            var machineGroup = await this.dataContext.MachineGroups.FirstOrDefaultAsync(machine => machine.Id == id);
+            var machineGroup = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
+                                                                   .Include(machineGroup => machineGroup.Tariffs)
+                                                                   .FirstOrDefaultAsync(machine => machine.Id == id);
             return machineGroup;
         }
 
         public async Task<IEnumerable<MachineGroup>> GetMachineGroups()
         {
-           var machines = await this.dataContext.MachineGroups.ToListAsync();
+           var machines = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
+                                                              .Include(machineGroup => machineGroup.Tariffs)
+                                                              .ToListAsync();
             return machines;
         }
 
         public async Task<IEnumerable<MachineUsage>> GetMachineUsages()
         {
-            var machineUsages = await this.dataContext.MachineUsages.ToListAsync();
+            var machineUsages = await this.dataContext.MachineUsages.Include(machineUsage => machineUsage.Machine)
+                                                                        .ThenInclude(machine => machine.MachineGroup)
+                                                                    .Include(machineUsage => machineUsage.Tariff).ToListAsync();
             return machineUsages;
         }
 
         public async Task<IEnumerable<Tariff>> GetTariffs()
         {
-            var tariffs = await this.dataContext.Tariffs.ToListAsync();
+            var tariffs = await this.dataContext.Tariffs.Include(tariff => tariff.MachineGroup)
+                                                        .ToListAsync();
             return tariffs;
         }
 
         public async Task<IEnumerable<Tariff>> GetTariffsOfMachineGroup(int id)
         {
-            var machineGroups = await this.dataContext.MachineGroups.FirstOrDefaultAsync(u => u.Id == id);
+            var machineGroups = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
+                                                                    .Include(machineGroup => machineGroup.Tariffs)
+                                                                    .FirstOrDefaultAsync(u => u.Id == id);
             return machineGroups.Tariffs;
         }
 
@@ -69,7 +78,12 @@ namespace EasyClean.API.Data
         {
             // IMPORTANT: We want to return also navigation properties and therefore we have
             // to include it specifically with Include(user => user.MachineUsages)
-            var user = await this.dataContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user = await this.dataContext.Users.Include(user => user.MachineUsages)
+                                                        .ThenInclude(machineUsage => machineUsage.Machine)
+                                                            .ThenInclude(machine => machine.MachineGroup)
+                                                   .Include(user => user.MachineUsages)
+                                                        .ThenInclude(machineUsage => machineUsage.Tariff)
+                                                   .Include(user => user.Topups).FirstOrDefaultAsync(u => u.Id == id);
             return user;
         }
 
@@ -77,7 +91,7 @@ namespace EasyClean.API.Data
         {
             // IMPORTANT: We want to return also navigation properties and therefore we have
             // to include it specifically with Include(user => user.MachineUsages)
-            var users = await this.dataContext.Users.ToListAsync();
+            var users = await this.dataContext.Users.Include(user => user.MachineUsages).Include(t => t.Topups).ToListAsync();
             return users;
         }
 

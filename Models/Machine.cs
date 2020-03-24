@@ -7,9 +7,9 @@ namespace EasyClean.API.Models
     {
         public int Id { get; set; }
         public string LabeledAs { get; set; }
-        public virtual ICollection<MachineUsage> MachineUsages { get; set; } // virtual: it is a navegation propery and needs to be lazy loaded
+        public ICollection<MachineUsage> MachineUsages { get; set; }
         public bool IsBlocked { get; set; }
-        public virtual MachineGroup MachineGroup { get; set; } // virtual: it is a navegation propery and needs to be lazy loaded
+        public MachineGroup MachineGroup { get; set; }
         public int MachineGroupId { get; set; }
     }
 }
