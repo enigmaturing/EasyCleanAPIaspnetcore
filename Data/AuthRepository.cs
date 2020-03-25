@@ -26,9 +26,11 @@ namespace EasyClean.API.Data
 
             if (user == null)
                 return null;
-            
-            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-                return null;
+
+            // We don´t need to check the password ourserlves anymore, we defer it to a silent manager
+            // now that we use the Identity Manager provided by the framework
+            // if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            //     return null;
 
             return user;
         }
@@ -63,8 +65,10 @@ namespace EasyClean.API.Data
             
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
+            // We don´t need to set the password ourserlves anymore, we defer it to a silent manager
+            // now that we use the Identity Manager provided by the framework
+            // user.PasswordHash = passwordHash;
+            // user.PasswordSalt = passwordSalt;
 
             // await next two lines because we work with async methods (much better since we are dealing
             // with a DB and inserting a value in it can take unexpectedly long)

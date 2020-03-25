@@ -17,8 +17,12 @@ namespace EasyClean.API.Data
                 {
                     byte[] passwordHash, passwordSalt;
                     CreatePasswordHash("password", out passwordHash, out passwordSalt);
-                    user.PasswordHash = passwordHash;
-                    user.PasswordSalt = passwordSalt;
+
+                    // We don´t need to set the password ourserlves anymore, we defer it to a silent manager
+                    // now that we use the Identity Manager provided by the framework
+                    // user.PasswordHash = passwordHash;
+                    // user.PasswordSalt = passwordSalt;
+                    
                     user.Email = user.Email.ToLower();
                     dataContext.Users.Add(user);
                 }
