@@ -1,6 +1,8 @@
 using System;
 using EasyClean.API.Data;
+using EasyClean.API.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,8 +24,9 @@ namespace EasyClean.API
                 try
                 {
                     var dataContext = services.GetRequiredService<DataContext>();
+                    var userManager = services.GetRequiredService<UserManager<User>>();
                     dataContext.Database.Migrate();  // Apply any pending migration and create DB if it does not exist
-                    Seed.SeedUsers(dataContext);
+                    Seed.SeedUsers(userManager);
                     Seed.SeedMachineGroups(dataContext);
                 }
                 catch (Exception ex)

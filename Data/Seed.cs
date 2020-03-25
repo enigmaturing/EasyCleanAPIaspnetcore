@@ -1,36 +1,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using EasyClean.API.Models;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 
 namespace EasyClean.API.Data
 {
     public class Seed
     {
-        public static void SeedUsers(DataContext dataContext)
+        public static void SeedUsers(UserManager<User> userManager)
         {
-            if (!dataContext.Users.Any())  // If there is no users stored in the DB, then seed dummy users from UserSeedData.json
+            if (!userManager.Users.Any())  // If there is no users stored in the DB, then seed dummy users from UserSeedData.json
             {
                 var userData = System.IO.File.ReadAllText("Data/UserSeedData.json"); // Read contents of the file
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);     // Deserialize it into a list of users
                 foreach (var user in users)         // Store each of the deserialized user-objects into de table Users of our DB
                 {
-                    byte[] passwordHash, passwordSalt;
-                    CreatePasswordHash("password", out passwordHash, out passwordSalt);
-
-                    // We don´t need to set the password ourserlves anymore, we defer it to a silent manager
-                    // now that we use the Identity Manager provided by the framework
-                    // user.PasswordHash = passwordHash;
-                    // user.PasswordSalt = passwordSalt;
-                    
-                    user.Email = user.Email.ToLower();
-                    dataContext.Users.Add(user);
+                    // In the following line we make use of Wait() because that is an async method being called from a meetod
+                    // (SeedUsers) that we dont want to defune as async, so we wait until the async Method CreateAsync is done. 
+                    userManager.CreateAsync(user, "password").Wait();
                 }
-                // There is no need to save asynchsrounously because this method will only be called
-                // once (when our application starts). So there is no way that there is more than one
-                // user saving changes at the same time by the time this is called. Therefore, we dont
-                // need an async call here
-                dataContext.SaveChanges(); // Save sinchronouslly
             }
         }
 
