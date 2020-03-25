@@ -7,6 +7,7 @@ using EasyClean.API.Data;
 using EasyClean.API.Dtos;
 using EasyClean.API.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -20,11 +21,16 @@ namespace EasyClean.API.Controllers
     {
         private readonly IAuthRepository repo;
         private readonly IConfiguration config;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
 
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public AuthController(IAuthRepository repo, IConfiguration config,
+                              UserManager<User> userManager, SignInManager<User> signInManager)
         {
             this.repo = repo;
             this.config = config;  // Inject IConfiguration from Startup.cs, so we can retrieve our token in method login
+            this.signInManager = signInManager;
+            this.userManager = userManager;
         }
 
         [HttpPost("register")]
@@ -52,14 +58,25 @@ namespace EasyClean.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            var user = await this.repo.Login(userForLoginDto.Email.ToLower(), userForLoginDto.Password);
+            // Make use of ASP.NET Core Identity with UserManager and SigningManager:
+            // UserManager:  Gives us the ability to store and retrieve Users in our DB.
+            // SigningManager: Gives us the ability to check the user’s password and log the user in.
+            var user = await userManager.FindByEmailAsync(userForLoginDto.Email.ToLower());
+            var result = await signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
 
-            if (user == null)
-                return Unauthorized();
+            if (result.Succeeded)
+            {
+                return Ok(new { token = GenerateJwtToken(user) });
+            }
 
-            // Return a TOKEN when the user is logged in
-            // The token can be validatec by the server without making a DB call
-            // This means we can add bits of information to the token so that once
+            return Unauthorized();
+        }
+
+        private string GenerateJwtToken(User user)
+        {
+            // This method eturns a TOKEN when the user is logged in
+            // The token can be validated by the server without making a DB call
+            // This means that we can add bits of information to the token so that once
             // the user is validated by the server, these bits of information can be
             // retrieved witouht the need of acessing the DB. Those bits of information
             // are called claims. We build up a token that contains the User's Id and the
@@ -100,7 +117,7 @@ namespace EasyClean.API.Controllers
             // Using our newly created token handler, we can create a token and pass him the token descriptor
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok( new {token = tokenHandler.WriteToken(token)} );
+            return tokenHandler.WriteToken(token);
         }
     }
 }
