@@ -3,12 +3,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EasyClean.API.Data;
 using EasyClean.API.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyClean.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MachinesController : ControllerBase
