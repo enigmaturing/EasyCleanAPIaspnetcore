@@ -65,7 +65,9 @@ namespace EasyClean.API.Controllers
 
             if (result.Succeeded)
             {
-                return Ok(new { token = GenerateJwtToken(user) });
+                // GenerateJwtToken is now an async method, so we need to AWAIT it
+                // Otherwise the SPA will try to login without having recieved the token yet
+                return Ok(new { token = await GenerateJwtToken(user) }); 
             }
 
             return Unauthorized();
