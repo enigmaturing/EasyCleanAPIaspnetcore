@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EasyClean.API.Data;
 using EasyClean.API.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyClean.API.Controllers
@@ -21,7 +20,6 @@ namespace EasyClean.API.Controllers
             this.mapper = mapper;
         }
 
-        [Authorize(Roles = "BusinessOwner")]
         [HttpGet]
         public async Task<IActionResult> GetMachineGroups()
         {
