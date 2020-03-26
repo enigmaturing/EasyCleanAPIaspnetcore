@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using EasyClean.API.Data;
 using EasyClean.API.Dtos;
 using EasyClean.API.Models;
@@ -19,40 +20,37 @@ namespace EasyClean.API.Controllers
     [AllowAnonymous]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthRepository repo;
         private readonly IConfiguration config;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly IMapper mapper;
 
-        public AuthController(IAuthRepository repo, IConfiguration config,
-                              UserManager<User> userManager, SignInManager<User> signInManager)
+        public AuthController(IConfiguration config,
+                              UserManager<User> userManager, SignInManager<User> signInManager,
+                              IMapper mapper)
         {
-            this.repo = repo;
             this.config = config;  // Inject IConfiguration from Startup.cs, so we can retrieve our token in method login
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            // Avoid having two users with the same email, one containing capital
-            // letters and one not
-            userForRegisterDto.Email = userForRegisterDto.Email.ToLower();
-            if (await this.repo.UserExists(userForRegisterDto.Email))
-                return BadRequest("This email was already used to register another account");
+            var userToCreate = this.mapper.Map<User>(userForRegisterDto); // Map a user from the recived dto
+            var result = await this.userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
 
-            // We can not assign the string password to userToCreate because the constructor
-            // of the User class does not contain a porperty password of type string, but two
-            // byte[] properties: passwordHash and passwordSalt. So, by the moment, we just
-            // assign a value to the property Email and let the Register method of our repo
-            // generate passwordHash and passwordSalt internally
-            var userToCreate = new User() { Email = userForRegisterDto.Email };
-            var createdUser = this.repo.Register(userToCreate, userForRegisterDto.Password);
-
-            // Return 201 that means CreatedAtRoute, meaning that the user was created
-            // and that it is available in a certain route of the API.
-            return StatusCode(201); // ToDo: Return not only the code, but also the route where the user is available
+            if (result.Succeeded)
+            {
+                // Return 201 that means CreatedAtRoute, meaning that the user was created
+                // and that it is available in a certain route of the API.
+                return StatusCode(201); 
+                // ToDo: Return not only the code, but also the route where the user is available
+                // ToDo: Return the user with the response too, mapped to a userForDetailedDto -> v.204
+            }
+            
+            return BadRequest(result.Errors); 
         }
 
         [HttpPost("login")]

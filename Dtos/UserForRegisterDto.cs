@@ -11,5 +11,7 @@ namespace EasyClean.API.Dtos
         [Required(ErrorMessage="You must provide a password")]
         [StringLength(15, MinimumLength=4, ErrorMessage="You must enter a password between 4 and 15 characters")]
         public string Password { get; set; }
+
+        public string UserName { get; set; }    
     }
 }
