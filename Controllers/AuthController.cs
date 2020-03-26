@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -70,7 +71,7 @@ namespace EasyClean.API.Controllers
             return Unauthorized();
         }
 
-        private string GenerateJwtToken(User user)
+        private async Task<string> GenerateJwtToken(User user)
         {
             // This method eturns a TOKEN when the user is logged in
             // The token can be validated by the server without making a DB call
@@ -79,11 +80,22 @@ namespace EasyClean.API.Controllers
             // retrieved witouht the need of acessing the DB. Those bits of information
             // are called claims. We build up a token that contains the User's Id and the
             // User's Email. We can define our claims as an array of objects of type Claim:
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email)
             };
+
+            // Retrieve all roles for the given user
+            var roles = await this.userManager.GetRolesAsync(user);
+
+            // Loop through all the roles and add them one by one to
+            // the JWT token that will be sent to the client when the given
+            // user logs in to our api
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             // We need a key to sign the token that we will send to the client, so that we can check that the token
             // is a valid one when it comes back to the server. This key will be a hashed string so that it is not readable
