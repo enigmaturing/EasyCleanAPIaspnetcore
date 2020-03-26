@@ -8,17 +8,52 @@ namespace EasyClean.API.Data
 {
     public class Seed
     {
-        public static void SeedUsers(UserManager<User> userManager)
+        public static void SeedUsers(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             if (!userManager.Users.Any())  // If there is no users stored in the DB, then seed dummy users from UserSeedData.json
             {
                 var userData = System.IO.File.ReadAllText("Data/UserSeedData.json"); // Read contents of the file
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);     // Deserialize it into a list of users
+                
+                // create some roles as an array of roles
+                var roles = new List<Role> {
+                    new Role { Name = "Client"},
+                    new Role { Name = "BusinessOwner"},
+                    new Role { Name = "FrontDeskEmployee"},
+                    new Role { Name = "BackOfficeEmployee"},
+                    new Role { Name = "ProductDeveloper"},
+                };
+
+                // populate these roles into our DB with the roleManager
+                foreach (var role in roles)
+                {
+                    roleManager.CreateAsync(role).Wait();
+                }
+                
                 foreach (var user in users)         // Store each of the deserialized user-objects into de table Users of our DB
                 {
                     // In the following line we make use of Wait() because that is an async method being called from a meetod
                     // (SeedUsers) that we dont want to defune as async, so we wait until the async Method CreateAsync is done. 
                     userManager.CreateAsync(user, "password").Wait();
+                    userManager.AddToRoleAsync(user, "Client"); // give these users a role of client
+                }
+
+                // create a new user called businessOwnerUser and give him the role of BusinessOwner
+                var businessOwnerUser = new User
+                {
+                    Email = "boss@jetsilk.com",
+                    UserName =  "boss@jetsilk.com"
+                };
+
+                var result = userManager.CreateAsync(businessOwnerUser, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    var businessOwner = userManager.FindByEmailAsync("boss@jetsilk.com").Result;
+                    userManager.AddToRolesAsync(businessOwner, new[] { "BusinessOwner", 
+                                                                       "Client", 
+                                                                       "FrontDeskEmployee",
+                                                                       "BackOfficeEmployee"});
                 }
             }
         }

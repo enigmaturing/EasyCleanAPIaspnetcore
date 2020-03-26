@@ -25,8 +25,9 @@ namespace EasyClean.API
                 {
                     var dataContext = services.GetRequiredService<DataContext>();
                     var userManager = services.GetRequiredService<UserManager<User>>();
+                    var roleManager = services.GetRequiredService<RoleManager<Role>>();
                     dataContext.Database.Migrate();  // Apply any pending migration and create DB if it does not exist
-                    Seed.SeedUsers(userManager);
+                    Seed.SeedUsers(userManager, roleManager);
                     Seed.SeedMachineGroups(dataContext);
                 }
                 catch (Exception ex)
