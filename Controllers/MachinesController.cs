@@ -21,7 +21,6 @@ namespace EasyClean.API.Controllers
             this.mapper = mapper;
         }
 
-        [Authorize(Policy = "RequireBusinessOwnerRole")]
         [HttpGet]
         public async Task<IActionResult> GetMachineGroups()
         {
