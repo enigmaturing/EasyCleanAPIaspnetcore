@@ -61,15 +61,17 @@ namespace EasyClean.API.Controllers
             // UserManager:  Gives us the ability to store and retrieve Users in our DB.
             // SigningManager: Gives us the ability to check the user’s password and log the user in.
             var user = await userManager.FindByEmailAsync(userForLoginDto.Email.ToLower());
-            var result = await signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
 
-            if (result.Succeeded)
+            if (user != null)
             {
-                // GenerateJwtToken is now an async method, so we need to AWAIT it
-                // Otherwise the SPA will try to login without having recieved the token yet
-                return Ok(new { token = await GenerateJwtToken(user) }); 
+                var result = await signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
+                if (result.Succeeded)
+                {
+                    // GenerateJwtToken is now an async method, so we need to AWAIT it
+                    // Otherwise the SPA will try to login without having recieved the token yet
+                    return Ok(new { token = await GenerateJwtToken(user) }); 
+                }
             }
-
             return Unauthorized();
         }
 
