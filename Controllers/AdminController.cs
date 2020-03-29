@@ -24,7 +24,7 @@ namespace EasyClean.API.Controllers
         }
 
         [Authorize(Policy = "RequireBusinessOwnerRole")]
-        [HttpGet]
+        [HttpGet("usersWithRoles")]
         public async Task<IActionResult> GetUsersWithRoles()
         {
             // Return a list of users along with their roles
@@ -34,6 +34,7 @@ namespace EasyClean.API.Controllers
                     {
                         Id = user.Id,
                         Email = user.Email,
+                        Surname = user.Surname,
                         Roles = (from userRole in user.UserRoles
                                  join role in dataContext.Roles
                                  on userRole.RoleId

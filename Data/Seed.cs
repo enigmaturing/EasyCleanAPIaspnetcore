@@ -43,7 +43,8 @@ namespace EasyClean.API.Data
                 var businessOwnerUser = new User
                 {
                     Email = "boss@jetsilk.com",
-                    UserName =  "boss@jetsilk.com"
+                    UserName =  "boss@jetsilk.com",
+                    Surname = "Oppermann"
                 };
 
                 var result = userManager.CreateAsync(businessOwnerUser, "password").Result;
@@ -61,7 +62,8 @@ namespace EasyClean.API.Data
                 var frontDeskUser = new User
                 {
                     Email = "frontdesk@jetsilk.com",
-                    UserName =  "frontdesk@jetsilk.com"
+                    UserName =  "frontdesk@jetsilk.com",
+                    Surname = "Mueller"
                 };
 
                 result = userManager.CreateAsync(frontDeskUser, "password").Result;
@@ -77,7 +79,8 @@ namespace EasyClean.API.Data
                 var backOfficeUser = new User
                 {
                     Email = "backoffice@jetsilk.com",
-                    UserName =  "backoffice@jetsilk.com"
+                    UserName =  "backoffice@jetsilk.com",
+                    Surname = "Schwarze"
                 };
 
                 result = userManager.CreateAsync(backOfficeUser, "password").Result;
