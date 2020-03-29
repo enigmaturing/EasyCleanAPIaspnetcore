@@ -40,7 +40,7 @@ namespace EasyClean.API.Controllers
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
             var userToCreate = this.mapper.Map<User>(userForRegisterDto); // Map a user from the recived dto
-            var result = await this.userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
+            var result = await this.userManager.CreateAsync(userToCreate, "password"); // set "password" as default password
 
             if (result.Succeeded)
             {
