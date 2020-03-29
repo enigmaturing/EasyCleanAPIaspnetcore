@@ -44,9 +44,12 @@ namespace EasyClean.API.Controllers
 
             if (result.Succeeded)
             {
+                var userCreated = userManager.FindByEmailAsync(userForRegisterDto.Email).Result;
+                result = await userManager.AddToRolesAsync(userCreated, new[] {"Employee"});
                 // Return 201 that means CreatedAtRoute, meaning that the user was created
                 // and that it is available in a certain route of the API.
-                return StatusCode(201); 
+                if (result.Succeeded)
+                    return StatusCode(201); 
                 // ToDo: Return not only the code, but also the route where the user is available
                 // ToDo: Return the user with the response too, mapped to a userForDetailedDto -> v.204
             }
