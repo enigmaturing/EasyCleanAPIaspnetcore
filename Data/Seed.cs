@@ -53,7 +53,6 @@ namespace EasyClean.API.Data
                 {
                     var businessOwner = userManager.FindByEmailAsync("boss@jetsilk.com").Result;
                     userManager.AddToRolesAsync(businessOwner, new[] { "BusinessOwner", 
-                                                                       "Client", 
                                                                        "FrontDeskEmployee",
                                                                        "BackOfficeEmployee"});
                 }
