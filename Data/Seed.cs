@@ -22,6 +22,7 @@ namespace EasyClean.API.Data
                     new Role { Name = "FrontDeskEmployee"},
                     new Role { Name = "BackOfficeEmployee"},
                     new Role { Name = "ProductDeveloper"},
+                    new Role { Name = "Employee"}
                 };
 
                 // populate these roles into our DB with the roleManager
@@ -54,6 +55,38 @@ namespace EasyClean.API.Data
                                                                        "Client", 
                                                                        "FrontDeskEmployee",
                                                                        "BackOfficeEmployee"});
+                }
+
+                // create a new user called businessOwnerUser and give him the role of BusinessOwner
+                var frontDeskUser = new User
+                {
+                    Email = "frontdesk@jetsilk.com",
+                    UserName =  "frontdesk@jetsilk.com"
+                };
+
+                result = userManager.CreateAsync(frontDeskUser, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    var businessOwner = userManager.FindByEmailAsync("frontdesk@jetsilk.com").Result;
+                    userManager.AddToRolesAsync(businessOwner, new[] { "FrontDeskEmployee",
+                                                                       "Employee"});
+                }
+
+                // create a new user called businessOwnerUser and give him the role of BusinessOwner
+                var backOfficeUser = new User
+                {
+                    Email = "backoffice@jetsilk.com",
+                    UserName =  "backoffice@jetsilk.com"
+                };
+
+                result = userManager.CreateAsync(backOfficeUser, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    var businessOwner = userManager.FindByEmailAsync("backoffice@jetsilk.com").Result;
+                    userManager.AddToRolesAsync(businessOwner, new[] { "BackOfficeEmployee",
+                                                                       "Employee"});
                 }
             }
         }
