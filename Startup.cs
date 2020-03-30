@@ -92,6 +92,9 @@ namespace EasyClean.API
             // Add automapper as a service so that the properties in our models are automatically mapped
             // with the corresponding properties in our DTOs
             services.AddAutoMapper(typeof(EasyCleanRepository).Assembly);
+            // Add service so that we can inject the AuthRepository using the Repository Pattern for authentication
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            // Add service so that we can inject the EasyCleanRepository using the Repository Pattern for retrieving and deleting users
             // Add service so that we can inject the EasyCleanRepository using the Repository Pattern 
             // With AddScoped<>(), an instance of the service is created once per http-request within the scope
             // this is a compromise between AddSingletone() and AddTransient()
