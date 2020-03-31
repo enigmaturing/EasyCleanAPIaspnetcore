@@ -18,7 +18,7 @@ namespace EasyClean.API.Data
                 // create some roles as an array of roles
                 var roles = new List<Role> {
                     new Role { Name = "Client"},
-                    new Role { Name = "BusinessOwner"},
+                    new Role { Name = "Admin"},
                     new Role { Name = "FrontDeskEmployee"},
                     new Role { Name = "BackOfficeEmployee"},
                     new Role { Name = "ProductDeveloper"},
@@ -39,25 +39,25 @@ namespace EasyClean.API.Data
                     userManager.AddToRoleAsync(user, "Client"); // give these users a role of client
                 }
 
-                // create a new user called businessOwnerUser and give him the role of BusinessOwner
-                var businessOwnerUser = new User
+                // create a new user called AdminUser and give him the role of Admin
+                var AdminUser = new User
                 {
                     Email = "boss@jetsilk.com",
                     UserName =  "boss@jetsilk.com",
                     Surname = "Oppermann"
                 };
 
-                var result = userManager.CreateAsync(businessOwnerUser, "password").Result;
+                var result = userManager.CreateAsync(AdminUser, "password").Result;
 
                 if (result.Succeeded)
                 {
-                    var businessOwner = userManager.FindByEmailAsync("boss@jetsilk.com").Result;
-                    userManager.AddToRolesAsync(businessOwner, new[] { "BusinessOwner", 
+                    var Admin = userManager.FindByEmailAsync("boss@jetsilk.com").Result;
+                    userManager.AddToRolesAsync(Admin, new[] { "Admin", 
                                                                        "FrontDeskEmployee",
                                                                        "BackOfficeEmployee"});
                 }
 
-                // create a new user called businessOwnerUser and give him the role of BusinessOwner
+                // create a new user called AdminUser and give him the role of Admin
                 var frontDeskUser = new User
                 {
                     Email = "frontdesk@jetsilk.com",
@@ -69,12 +69,12 @@ namespace EasyClean.API.Data
 
                 if (result.Succeeded)
                 {
-                    var businessOwner = userManager.FindByEmailAsync("frontdesk@jetsilk.com").Result;
-                    userManager.AddToRolesAsync(businessOwner, new[] { "FrontDeskEmployee",
+                    var Admin = userManager.FindByEmailAsync("frontdesk@jetsilk.com").Result;
+                    userManager.AddToRolesAsync(Admin, new[] { "FrontDeskEmployee",
                                                                        "Employee"});
                 }
 
-                // create a new user called businessOwnerUser and give him the role of BusinessOwner
+                // create a new user called AdminUser and give him the role of Admin
                 var backOfficeUser = new User
                 {
                     Email = "backoffice@jetsilk.com",
@@ -86,8 +86,8 @@ namespace EasyClean.API.Data
 
                 if (result.Succeeded)
                 {
-                    var businessOwner = userManager.FindByEmailAsync("backoffice@jetsilk.com").Result;
-                    userManager.AddToRolesAsync(businessOwner, new[] { "BackOfficeEmployee",
+                    var Admin = userManager.FindByEmailAsync("backoffice@jetsilk.com").Result;
+                    userManager.AddToRolesAsync(Admin, new[] { "BackOfficeEmployee",
                                                                        "Employee"});
                 }
             }

@@ -23,7 +23,7 @@ namespace EasyClean.API.Controllers
             this.dataContext = dataContext;
         }
 
-        [Authorize(Policy = "RequireBusinessOwnerRole")]
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("usersWithRoles")]
         public async Task<IActionResult> GetUsersWithRoles()
         {
@@ -47,7 +47,7 @@ namespace EasyClean.API.Controllers
             return Ok(userList);
         }
 
-        [Authorize(Policy = "RequireBusinessOwnerRole")]
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("editRoles/{userId}")]
         public async Task<IActionResult> EditRoles(string userId, RoleEditDto roleEditDto)
         {

@@ -114,12 +114,12 @@ namespace EasyClean.API
             // add authorization policies to protect our endpoints
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("RequireBusinessOwnerRole",
-                                  policy => policy.RequireRole("BusinessOwner", "ProductDeveloper"));
+                options.AddPolicy("RequireAdminRole",
+                                  policy => policy.RequireRole("Admin", "ProductDeveloper"));
                 options.AddPolicy("RequireBackOfficeRole", 
-                                   policy => policy.RequireRole("BackOfficeEmployee", "BusinessOwner", "ProductDeveloper"));
+                                   policy => policy.RequireRole("BackOfficeEmployee", "Admin", "ProductDeveloper"));
                 options.AddPolicy("RequireClientManagementRole",
-                                    policy => policy.RequireRole("FrontDeskEmployee", "BusinessOwner", "ProductDeveloper"));
+                                    policy => policy.RequireRole("FrontDeskEmployee", "Admin", "ProductDeveloper"));
             }
             );
         }
