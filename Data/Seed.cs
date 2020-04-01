@@ -36,7 +36,7 @@ namespace EasyClean.API.Data
                     // In the following line we make use of Wait() because that is an async method being called from a meetod
                     // (SeedUsers) that we dont want to defune as async, so we wait until the async Method CreateAsync is done. 
                     userManager.CreateAsync(user, "password").Wait();
-                    userManager.AddToRoleAsync(user, "Client"); // give these users a role of client
+                    userManager.AddToRoleAsync(user, "Client").Wait(); // give these users a role of client
                 }
 
                 // create a new user called AdminUser and give him the role of Admin
@@ -54,7 +54,7 @@ namespace EasyClean.API.Data
                     var Admin = userManager.FindByEmailAsync("boss@jetsilk.com").Result;
                     userManager.AddToRolesAsync(Admin, new[] { "Admin", 
                                                                        "FrontDeskEmployee",
-                                                                       "BackOfficeEmployee"});
+                                                                       "BackOfficeEmployee"}).Wait();
                 }
 
                 // create a new user called AdminUser and give him the role of Admin
@@ -71,7 +71,7 @@ namespace EasyClean.API.Data
                 {
                     var Admin = userManager.FindByEmailAsync("frontdesk@jetsilk.com").Result;
                     userManager.AddToRolesAsync(Admin, new[] { "FrontDeskEmployee",
-                                                                       "Employee"});
+                                                                       "Employee"}).Wait();
                 }
 
                 // create a new user called AdminUser and give him the role of Admin
@@ -88,7 +88,7 @@ namespace EasyClean.API.Data
                 {
                     var Admin = userManager.FindByEmailAsync("backoffice@jetsilk.com").Result;
                     userManager.AddToRolesAsync(Admin, new[] { "BackOfficeEmployee",
-                                                                       "Employee"});
+                                                                       "Employee"}).Wait();
                 }
             }
         }
