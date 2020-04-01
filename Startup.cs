@@ -57,6 +57,10 @@ namespace EasyClean.API
             // Configuration to suport role management:
             IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
             {
+                // In the next line, we limit the length of TEXT values for MySql databases
+                // Follow the link for more information about this:
+                // https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/issues/937
+                opt.Stores.MaxLengthForKeys = 64; 
                 // In dev mode, we set the password requirements to be not so strong
                 // so that we can insert easy passowrds for testing
                 opt.Password.RequireDigit = false;

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasyClean.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200325145732_IdentityInitial")]
-    partial class IdentityInitial
+    [Migration("20200401201139_InitialIdentity")]
+    partial class InitialIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -332,10 +332,12 @@ namespace EasyClean.API.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(64);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(64);
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("TEXT");
@@ -356,10 +358,12 @@ namespace EasyClean.API.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(64);
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(64);
 
                     b.Property<string>("Value")
                         .HasColumnType("TEXT");

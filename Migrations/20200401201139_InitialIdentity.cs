@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EasyClean.API.Migrations
 {
-    public partial class IdentityInitial : Migration
+    public partial class InitialIdentity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -141,8 +141,8 @@ namespace EasyClean.API.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 64, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 64, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false)
                 },
@@ -186,8 +186,8 @@ namespace EasyClean.API.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 64, nullable: false),
+                    Name = table.Column<string>(maxLength: 64, nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
