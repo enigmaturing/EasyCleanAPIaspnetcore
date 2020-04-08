@@ -23,6 +23,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 
 namespace EasyClean.API
 {
@@ -126,6 +128,27 @@ namespace EasyClean.API
                                     policy => policy.RequireRole("FrontDeskEmployee", "Admin", "ProductDeveloper"));
             }
             );
+            // add swagger as a service:
+            services.AddOpenApiDocument(document =>
+            {
+                document.Title = "EasyClean Web API";
+                document.Description = "This is the Web API for EasyClean";
+
+                // Configure jwt for swagger,
+                // This lets adding the jwt to the header
+                document.AddSecurity("JWT", Enumerable.Empty<string>(), 
+                    new OpenApiSecurityScheme
+                    {
+                        Type = OpenApiSecuritySchemeType.ApiKey,
+                        Name = "Authorization",
+                        In = OpenApiSecurityApiKeyLocation.Header,
+                        Description = "Cpoy and paste the JWT Token in the fueld 'Value' so:  Bearer {Token JWT}."
+                    }
+                );
+
+                document.OperationProcessors.Add(
+                    new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -158,6 +181,10 @@ namespace EasyClean.API
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthentication();
+
+            // Middleware for swagger
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseAuthorization();
 
