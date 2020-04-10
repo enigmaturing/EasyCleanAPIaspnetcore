@@ -6,3 +6,6 @@ appsettings.json
 wwwroot
 *.sln
 *.csproj.user
+.vs/EasyClean.API/config/applicationhost.config
+.vs/EasyClean.API/DesignTimeBuild/.dtbcache.v2
+.vs/EasyClean.API/v16/.suo
