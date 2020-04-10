@@ -93,7 +93,7 @@ namespace EasyClean.API.Controllers
 
             if (await repo.SaveAll())
             {
-                return Ok();
+                return Ok(mapper.Map<UserForListDto>(user));
             }
 
             throw new Exception("Creating the machine usage failed on save");
