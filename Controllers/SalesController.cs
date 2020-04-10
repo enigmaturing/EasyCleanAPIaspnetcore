@@ -98,5 +98,46 @@ namespace EasyClean.API.Controllers
 
             throw new Exception("Creating the machine usage failed on save");
         }
+
+        // POST: api/Sales/topups
+        /// <summary>
+        /// Creates a new topup for a given user.
+        /// </summary>
+        /// <param name="topupForCreationDto">Details about the topup to be created.</param>
+        /// <response code="201">Created.</response>        
+        /// <response code="401">No FrontDeskEmployee role associated to this JWT Token</response>
+        /// <response code="404">No client or employee found for the provided id.</response>
+        [Authorize(Policy = "RequireClientManagementRole")]
+        [HttpPost("topups")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> CreateTopup(TopupForCreationDto topupForCreationDto)
+        {
+            var topup = mapper.Map<Topup>(topupForCreationDto);
+
+            var employee = await repo.GetUser(topupForCreationDto.EmployeeId);
+            var client = await repo.GetUser(topupForCreationDto.UserId);
+
+            if (employee == null || client == null)
+            {
+                return NotFound("No client or employee found for the provided id");
+            }
+
+            topup.User = client;
+            topup.NameOfEmployee = employee.Name + " " + employee.Surname;
+            topup.DateOfTopup = DateTime.Now;
+
+            client.RemainingCredit += topupForCreationDto.Amount;
+
+            repo.Add(topup);
+
+            if (await repo.SaveAll())
+            {
+                return Ok(mapper.Map<TopupsForDetailedDto>(topup));
+            }
+
+            throw new Exception("Creating the topup failed on save");
+        }
     }
 }

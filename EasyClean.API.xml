@@ -65,9 +65,18 @@
             </summary>
             <param name="machineUsageForCreationDto">Details abot the machine usage to be created.</param>
             <response code="201">Created.</response>        
-            <response code="404">No user, machine or tariff found for the provided id.</response>
-            <response code="401">No client role associated to this JWT Token</response>
             <response code="400">Client has not enough credit to make this usage in this machine</response>
+            <response code="401">No client role associated to this JWT Token</response>
+            <response code="404">No user, machine or tariff found for the provided id.</response>
+        </member>
+        <member name="M:EasyClean.API.Controllers.SalesController.CreateTopup(EasyClean.API.Dtos.TopupForCreationDto)">
+            <summary>
+            Creates a new topup for a given user.
+            </summary>
+            <param name="topupForCreationDto">Details about the topup to be created.</param>
+            <response code="201">Created.</response>        
+            <response code="401">No FrontDeskEmployee role associated to this JWT Token</response>
+            <response code="404">No client or employee found for the provided id.</response>
         </member>
         <member name="M:EasyClean.API.Controllers.TariffsController.CreateTariff(EasyClean.API.Dtos.TariffForCreationDto)">
             <summary>
