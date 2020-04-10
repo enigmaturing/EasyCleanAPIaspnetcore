@@ -29,11 +29,19 @@ namespace EasyClean.API.Data
             this.dataContext.Remove(entity);
         }
 
+        public void Update<T>(T entity) where T : class
+        {
+            // We dont need to Update the entity asincronously because
+            // because Update(entity) only updates it in memory but do not
+            // access the DB. So there will be no simultaneous access to the DB
+            this.dataContext.Update(entity);
+        }
+
         public async Task<MachineGroup> GetMachineGroup(int id)
         {
             var machineGroup = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
                                                                    .Include(machineGroup => machineGroup.Tariffs)
-                                                                   .FirstOrDefaultAsync(machine => machine.Id == id);
+                                                                   .FirstOrDefaultAsync(machineGroup => machineGroup.Id == id);
             return machineGroup;
         }
 
@@ -53,6 +61,14 @@ namespace EasyClean.API.Data
             return machineUsages;
         }
 
+        public async Task<Machine> GetMachine(int id)
+        {
+            var machine = await this.dataContext.Machines.Include(machine => machine.MachineGroup)
+                                                                   .Include(machine => machine.MachineUsages)
+                                                                   .FirstOrDefaultAsync(machine => machine.Id == id);
+            return machine;
+        }
+
         public async Task<IEnumerable<Tariff>> GetTariffs()
         {
             var tariffs = await this.dataContext.Tariffs.Include(tariff => tariff.MachineGroup)
@@ -64,13 +80,13 @@ namespace EasyClean.API.Data
         {
             var machineGroups = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
                                                                     .Include(machineGroup => machineGroup.Tariffs)
-                                                                    .FirstOrDefaultAsync(u => u.Id == id);
+                                                                    .FirstOrDefaultAsync(machineGroup => machineGroup.Id == id);
             return machineGroups.Tariffs;
         }
 
         public async Task<Tariff> GetTariff(int id)
         {
-            var tariff = await this.dataContext.Tariffs.FirstOrDefaultAsync(u => u.Id == id);
+            var tariff = await this.dataContext.Tariffs.FirstOrDefaultAsync(tariff => tariff.Id == id);
             return tariff;
         }
         

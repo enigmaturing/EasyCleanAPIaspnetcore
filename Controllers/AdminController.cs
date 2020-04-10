@@ -82,11 +82,13 @@ namespace EasyClean.API.Controllers
         /// does not have role admin or it was not provided.</response>               
         /// <response code="200">OK. Roles were edited. In addition, returns the specified roles.</response>        
         /// <response code="404">NotFound. The user with the specified id was not found.</response>
+        /// <response code="400">Bad request. Failed on dealing on adding /removing roles for user in DB.</response>
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("editRoles/{userId}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> EditRoles(string userId, RoleEditDto roleEditDto)
         {
             // Find the user in the DB and retrieve its actual roles

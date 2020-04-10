@@ -36,6 +36,7 @@ namespace EasyClean.API.Helpers
             CreateMap<UserForRegisterDto, User>()
                 .ForMember(dest => dest.UserName, opt =>
                 opt.MapFrom(src => src.Email));
+            CreateMap<MachineUsageForCreationDto, MachineUsage>();
         }
     }
 }

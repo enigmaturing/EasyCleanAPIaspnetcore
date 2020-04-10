@@ -27,6 +27,7 @@
             does not have role admin or it was not provided.</response>               
             <response code="200">OK. Roles were edited. In addition, returns the specified roles.</response>        
             <response code="404">NotFound. The user with the specified id was not found.</response>
+            <response code="400">Bad request. Failed on dealing on adding /removing roles for user in DB.</response>
         </member>
         <member name="M:EasyClean.API.Controllers.AuthController.Register(EasyClean.API.Dtos.UserForRegisterDto)">
             <summary>
@@ -55,8 +56,18 @@
             <summary>
             Returns all usages registered in all machines.
             </summary>
-            <response code="201">OK.</response>        
-            <response code="400">It was not possible to retrieve any machine usage.</response>
+            <response code="200">OK.</response>        
+            <response code="404">No machine usages found.</response>
+        </member>
+        <member name="M:EasyClean.API.Controllers.SalesController.CreateMachineUsage(EasyClean.API.Dtos.MachineUsageForCreationDto)">
+            <summary>
+            Creates a new machine usage of a given machine for a given user.
+            </summary>
+            <param name="machineUsageForCreationDto">Details abot the machine usage to be created.</param>
+            <response code="201">Created.</response>        
+            <response code="404">No user, machine or tariff found for the provided id.</response>
+            <response code="401">No client role associated to this JWT Token</response>
+            <response code="400">Client has not enough credit to make this usage in this machine</response>
         </member>
         <member name="M:EasyClean.API.Controllers.TariffsController.CreateTariff(EasyClean.API.Dtos.TariffForCreationDto)">
             <summary>

@@ -126,6 +126,8 @@ namespace EasyClean.API
                                    policy => policy.RequireRole("BackOfficeEmployee", "Admin", "ProductDeveloper"));
                 options.AddPolicy("RequireClientManagementRole",
                                     policy => policy.RequireRole("FrontDeskEmployee", "Admin", "ProductDeveloper"));
+                options.AddPolicy("RequireClientRole",
+                                    policy => policy.RequireRole("Client"));
             }
             );
             // add swagger as a service:
