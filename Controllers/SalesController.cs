@@ -26,13 +26,13 @@ namespace EasyClean.API.Controllers
             this.mapper = mapper;
         }
 
-        // GET: api/Sales
+        // GET: api/Sales/machineUsages
         /// <summary>
         /// Returns all usages registered in all machines.
         /// </summary>
         /// <response code="200">OK.</response>        
         /// <response code="404">No machine usages found.</response>
-        [HttpGet]
+        [HttpGet("machineUsages")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMachineUsages()
@@ -46,21 +46,21 @@ namespace EasyClean.API.Controllers
             return Ok(machineUsagesToReturnToClient);
         }
 
-        // POST: api/Sales
+        // POST: api/Sales/machineUsages
         /// <summary>
         /// Creates a new machine usage of a given machine for a given user.
         /// </summary>
         /// <param name="machineUsageForCreationDto">Details abot the machine usage to be created.</param>
         /// <response code="201">Created.</response>        
-        /// <response code="404">No user, machine or tariff found for the provided id.</response>
-        /// <response code="401">No client role associated to this JWT Token</response>
         /// <response code="400">Client has not enough credit to make this usage in this machine</response>
+        /// <response code="401">No client role associated to this JWT Token</response>
+        /// <response code="404">No user, machine or tariff found for the provided id.</response>
         [Authorize(Policy = "RequireClientRole")]
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPost("machineUsages")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CreateMachineUsage(MachineUsageForCreationDto machineUsageForCreationDto)
         {
             var machineUsage= mapper.Map<MachineUsage>(machineUsageForCreationDto);
