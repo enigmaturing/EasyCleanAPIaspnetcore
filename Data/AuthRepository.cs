@@ -15,7 +15,6 @@ namespace EasyClean.API.Data
 {
     public class AuthRepository : IAuthRepository
     {
-        private readonly DataContext dataContext;
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
         private readonly SignInManager<User> signInManager;
@@ -56,8 +55,7 @@ namespace EasyClean.API.Data
             {
                 var userCreated = userManager.FindByEmailAsync(userForRegisterDto.Email).Result;
                 result = await userManager.AddToRolesAsync(userCreated, new[] { "Employee" });
-                // Return 201 that means CreatedAtRoute, meaning that the user was created
-                // and that it is available in a certain route of the API.
+
                 if (result.Succeeded)
                     return userCreated;
                 // ToDo: Return not only the code, but also the route where the user is available

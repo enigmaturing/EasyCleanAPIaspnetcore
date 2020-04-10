@@ -8,10 +8,13 @@ using AutoMapper;
 using EasyClean.API.Data;
 using EasyClean.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
 
 namespace EasyClean.API.Controllers
 {
+    [OpenApiTag("Auth", Description = "Registers and logs users in")]
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
@@ -24,7 +27,16 @@ namespace EasyClean.API.Controllers
             this.repo = repo;
         }
 
+        // POST: api/Auth/register
+        /// <summary>
+        /// Registers a user in the api
+        /// </summary>
+        /// <param name="userForRegisterDto">Information about the user that wants to be registered</param>
+        /// <response code="201">OK.</response>        
+        /// <response code="400">It was not possible to register the user. Email alreday taken.</response>
         [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
             var user = await this.repo.Register(userForRegisterDto);
@@ -39,7 +51,16 @@ namespace EasyClean.API.Controllers
             return BadRequest("Not possible to register the user. Try with another email."); 
         }
 
+        // POST: api/Auth/login
+        /// <summary>
+        /// Logs a user in the api
+        /// </summary>
+        /// <param name="userForLoginDto">Email and password of the user that logs in</param>
+        /// <response code="201">OK.</response>        
+        /// <response code="401">Wrong email or password</response>  
         [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var token = await this.repo.Login(userForLoginDto);

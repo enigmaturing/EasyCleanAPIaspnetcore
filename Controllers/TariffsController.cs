@@ -5,9 +5,11 @@ using EasyClean.API.Data;
 using EasyClean.API.Dtos;
 using EasyClean.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using NSwag.Annotations;
 
 namespace EasyClean.API.Controllers
 {
+    [OpenApiTag("Tariffs", Description = "Creates tariffs and administrate them")]
     [Route("api/[controller]")]
     [ApiController]
     public class TariffsController : ControllerBase
@@ -21,16 +23,28 @@ namespace EasyClean.API.Controllers
             this.mapper = mapper;
         }
 
+        // POST: api/Tariffs
+        /// <summary>
+        /// Creates a new tariff for a given machine group
+        /// </summary>
+        /// <param name="tariffForCreationDto">Details abot the tariff to be created</param>
+        /// <response code="201">OK.</response>        
+        /// <response code="404">It was not possible to create the tariff. No machine group found
+        /// under the provided machine group id</response>
         [HttpPost]
         public async Task<IActionResult> CreateTariff(TariffForCreationDto tariffForCreationDto)
         {
             var tariff = mapper.Map<Tariff>(tariffForCreationDto);
 
             // Retrieve the object machineGroup this tariff belongs to.
-            // Then store the retrieved objeto into the tariff
+            // Then store the retrieved object into the tariff
             var machineGroup = await repo.GetMachineGroup(tariff.MachineGroupId);
-            tariff.MachineGroup = machineGroup;
+            if (machineGroup == null)
+            {
+                return NotFound("No machine group found under the provided id");
+            }
 
+            tariff.MachineGroup = machineGroup;
             repo.Add(tariff);
 
             if(await repo.SaveAll())
@@ -39,25 +53,66 @@ namespace EasyClean.API.Controllers
             throw new Exception("Creating the tariff failed on save");
         }
 
+        // GET: api/Tariffs
+        /// <summary>
+        /// Returns all tariffs for each machine group available
+        /// </summary>
+        /// <response code="201">OK.</response>        
+        /// <response code="404">No tariff found</response>
         [HttpGet]
         public async Task<IActionResult> GetTariffs()
         {
             var tariffs = await this.repo.GetTariffs();
-            return Ok(tariffs);
+            if (tariffs == null)
+            {
+                return NotFound("No tariff found");
+            }
+            else
+            {
+                return Ok(tariffs);
+            }
         }
 
+        // GET: api/Tariffs/{id}
+        /// <summary>
+        /// Retunrs information about a tariff by its id
+        /// </summary>
+        /// <param name="id">Id of the tariff whose information should be retrieved</param>
+        /// <response code="201">OK.</response>        
+        /// <response code="404">No tariff found under this tariff id</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTariff(int id)
         {
             var tariffs = await this.repo.GetTariff(id);
-            return Ok(tariffs);
+            if (tariffs == null)
+            {
+                return NotFound("No tariff found");
+            }
+            else
+            {
+                return Ok(tariffs);
+            }
         }
 
+        // GET: api/Tariffs/machinegroup/{id}
+        /// <summary>
+        /// Retunrs all tariffs for a given machine group id
+        /// </summary>
+        /// <param name="id">Id of the machine group whose tariffs should be retrieved</param>
+        /// <response code="201">OK.</response>        
+        /// <response code="404">No tariff found for this machine group</response>
         [HttpGet("machinegroup/{id}")]
         public async Task<IActionResult> GetTariffsOfMachineGroup(int id)
         {
             var tariffs = await this.repo.GetTariffsOfMachineGroup(id);
-            return Ok(tariffs);
+            if (tariffs == null)
+            {
+                return NotFound("No tariff found");
+            }
+            else
+            {
+                return Ok(tariffs);
+            }
         }
     }
 }

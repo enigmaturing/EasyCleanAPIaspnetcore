@@ -4,12 +4,16 @@ using EasyClean.API.Data;
 using EasyClean.API.Dtos;
 using EasyClean.API.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NSwag.Annotations;
 
 namespace EasyClean.API.Controllers
 {
+    [OpenApiTag("Admin", Description = "Creates employees and " +
+        "                        lets administrate their roles")]
     [ApiController]
     [Route("api/[controller]")]
     public class AdminController : ControllerBase
@@ -23,8 +27,19 @@ namespace EasyClean.API.Controllers
             this.dataContext = dataContext;
         }
 
+        // GET: api/Admin/usersWithRoles
+        /// <summary>
+        /// Returns all users along with their roles
+        /// </summary>
+        /// <response code="401">Unauthorized. The provided JWT Token is wrong, 
+        /// does not have role admin or it was not provided.</response>              
+        /// <response code="200">OK. Returns the list of users with roles.</response>        
+        /// <response code="404">NotFound. No users were found.</response>        
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("usersWithRoles")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetUsersWithRoles()
         {
             // Return a list of users along with their roles
@@ -43,16 +58,43 @@ namespace EasyClean.API.Controllers
                     })
                     .ToListAsync();
 
-
-            return Ok(userList);
+            if (userList == null)
+            {
+                return NotFound();
+            } 
+            else 
+            {
+                return Ok(userList);
+            }
         }
 
+        // POST: api/Admin/editRoles/5
+        /// <summary>
+        /// Modifies the roles of a given user.
+        /// </summary>
+        /// <remarks>
+        /// The roles must be specified in the body of this post request in the form
+        /// of the dto: roleEditDto
+        /// </remarks>
+        /// <param name="userId">Id of the user whose role must be modified.</param>
+        /// <param name="roleEditDto">Roles to be modified</param>
+        /// <response code="401">Unauthorized. The provided JWT Token is wrong, 
+        /// does not have role admin or it was not provided.</response>               
+        /// <response code="200">OK. Roles were edited. In addition, returns the specified roles.</response>        
+        /// <response code="404">NotFound. The user with the specified id was not found.</response>
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("editRoles/{userId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EditRoles(string userId, RoleEditDto roleEditDto)
         {
             // Find the user in the DB and retrieve its actual roles
             var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound("No user found with that id");
+            }
             var userRoles = await userManager.GetRolesAsync(user);
 
             var selectedRoles = roleEditDto.RoleNames;
