@@ -6,7 +6,8 @@ namespace EasyClean.API.Data
 {
     public interface IAuthRepository
     {
-         Task<User> Register(UserForRegisterDto userForRegisterDto);
-         Task<string> Login(UserForLoginDto userForLoginDto);
+        Task<User> RegisterClient(UserForRegisterClientDto userForRegisterClientDto);
+        Task<User> RegisterEmployee(UserForRegisterEmployeeDto userForRegisterEmployeeDto);
+        Task<string> Login(UserForLoginDto userForLoginDto);
     }
 }

@@ -17,7 +17,6 @@ namespace EasyClean.API.Controllers
     [OpenApiTag("Auth", Description = "Registers and logs users in")]
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository repo;
@@ -27,19 +26,20 @@ namespace EasyClean.API.Controllers
             this.repo = repo;
         }
 
-        // POST: api/Auth/register
+        // POST: api/Auth/register/employee
         /// <summary>
-        /// Registers a user in the api
+        /// Registers a user in the api and assigns eployee roles to him specified in DTO
         /// </summary>
-        /// <param name="userForRegisterDto">Information about the user that wants to be registered</param>
+        /// <param name="userForRegisteEmployeeDto">Information about the user that wants to be registered</param>
         /// <response code="201">OK.</response>        
         /// <response code="400">It was not possible to register the user. Email alreday taken.</response>
-        [HttpPost("register")]
+        [HttpPost("register/employee")]
+        [Authorize(Policy = "RequireAdminRole")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
+        public async Task<IActionResult> RegisterEmployee(UserForRegisterEmployeeDto userForRegisteEmployeeDto)
         {
-            var user = await this.repo.Register(userForRegisterDto);
+            var user = await this.repo.RegisterEmployee(userForRegisteEmployeeDto);
 
             if (user != null)
             {
@@ -51,6 +51,31 @@ namespace EasyClean.API.Controllers
             return BadRequest("Not possible to register the user. Try with another email."); 
         }
 
+        // POST: api/Auth/register/client
+        /// <summary>
+        /// Registers a user in the api and assigns client role to it
+        /// </summary>
+        /// <param name="userForRegisterClientDto">Information about the user that wants to be registered</param>
+        /// <response code="201">OK.</response>        
+        /// <response code="400">It was not possible to register the user. Email alreday taken.</response>
+        [HttpPost("register/client")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RegisterClient(UserForRegisterClientDto userForRegisterClientDto)
+        {
+            var user = await this.repo.RegisterClient(userForRegisterClientDto);
+
+            if (user != null)
+            {
+                return StatusCode(201);
+                // ToDo: Return not only the code, but also the route where the user is available
+                // ToDo: Return the user with the response too, mapped to a userForDetailedDto -> v.204
+            }
+
+            return BadRequest("Not possible to register the user. Try with another email.");
+        }
+
         // POST: api/Auth/login
         /// <summary>
         /// Logs a user in the api
@@ -59,6 +84,7 @@ namespace EasyClean.API.Controllers
         /// <response code="201">OK.</response>        
         /// <response code="401">Wrong email or password</response>  
         [HttpPost("login")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)

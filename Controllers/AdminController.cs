@@ -13,7 +13,7 @@ using NSwag.Annotations;
 namespace EasyClean.API.Controllers
 {
     [OpenApiTag("Admin", Description = "Creates employees and " +
-        "                        lets administrate their roles")]
+                         "lets administrate their roles")]
     [ApiController]
     [Route("api/[controller]")]
     public class AdminController : ControllerBase

@@ -46,15 +46,42 @@ namespace EasyClean.API.Data
             return null;
         }
 
-        public async Task<User> Register(UserForRegisterDto userForRegisterDto)
+        public async Task<User> RegisterClient(UserForRegisterClientDto userForRegisterClientDto)
         {
-            var userToCreate = this.mapper.Map<User>(userForRegisterDto); // Map a user from the recived dto
+            var userToCreate = this.mapper.Map<User>(userForRegisterClientDto); // Map a user from the recived dto
+            var result = await this.userManager.CreateAsync(userToCreate, userForRegisterClientDto.Password); // set "password" as default password
+
+            if (result.Succeeded)
+            {
+                var userCreated = userManager.FindByEmailAsync(userForRegisterClientDto.Email).Result;
+                result = await userManager.AddToRolesAsync(userCreated, new[] { "Client" });
+
+                if (result.Succeeded)
+                    return userCreated;
+                // ToDo: Return not only the code, but also the route where the user is available
+                // ToDo: Return the user with the response too, mapped to a userForDetailedDto -> v.204
+            }
+
+            return null;
+        }
+
+        public async Task<User> RegisterEmployee(UserForRegisterEmployeeDto userForRegisterEmployeeDto)
+        {
+            var userToCreate = this.mapper.Map<User>(userForRegisterEmployeeDto); // Map a user from the recived dto
             var result = await this.userManager.CreateAsync(userToCreate, "password"); // set "password" as default password
 
             if (result.Succeeded)
             {
-                var userCreated = userManager.FindByEmailAsync(userForRegisterDto.Email).Result;
-                result = await userManager.AddToRolesAsync(userCreated, new[] { "Employee" });
+                // Create a list of roles form ·"userToCreate" containing "Employee" too
+                List<string> roleNames = new List<string>();
+                roleNames.Add("Employee");
+                foreach (var role in userForRegisterEmployeeDto.RoleNames)
+                {
+                    roleNames.Add(role);
+                }
+                // Assign the list of roles to the new user to make it an employee
+                var userCreated = userManager.FindByEmailAsync(userForRegisterEmployeeDto.Email).Result;
+                result = await userManager.AddToRolesAsync(userCreated, roleNames);
 
                 if (result.Succeeded)
                     return userCreated;

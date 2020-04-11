@@ -29,11 +29,19 @@
             <response code="404">NotFound. The user with the specified id was not found.</response>
             <response code="400">Bad request. Failed on dealing on adding /removing roles for user in DB.</response>
         </member>
-        <member name="M:EasyClean.API.Controllers.AuthController.Register(EasyClean.API.Dtos.UserForRegisterDto)">
+        <member name="M:EasyClean.API.Controllers.AuthController.RegisterEmployee(EasyClean.API.Dtos.UserForRegisterEmployeeDto)">
             <summary>
-            Registers a user in the api
+            Registers a user in the api and assigns eployee roles to him specified in DTO
             </summary>
-            <param name="userForRegisterDto">Information about the user that wants to be registered</param>
+            <param name="userForRegisteEmployeeDto">Information about the user that wants to be registered</param>
+            <response code="201">OK.</response>        
+            <response code="400">It was not possible to register the user. Email alreday taken.</response>
+        </member>
+        <member name="M:EasyClean.API.Controllers.AuthController.RegisterClient(EasyClean.API.Dtos.UserForRegisterClientDto)">
+            <summary>
+            Registers a user in the api and assigns client role to it
+            </summary>
+            <param name="userForRegisterClientDto">Information about the user that wants to be registered</param>
             <response code="201">OK.</response>        
             <response code="400">It was not possible to register the user. Email alreday taken.</response>
         </member>

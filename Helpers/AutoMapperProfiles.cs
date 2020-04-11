@@ -33,7 +33,10 @@ namespace EasyClean.API.Helpers
             CreateMap<Topup, TopupsForDetailedDto>();
             CreateMap<MachineGroup, MachineGroupForListDto>();
             CreateMap<TariffForCreationDto, Tariff>();
-            CreateMap<UserForRegisterDto, User>()
+            CreateMap<UserForRegisterClientDto, User>()
+                .ForMember(dest => dest.UserName, opt =>
+                opt.MapFrom(src => src.Email));
+            CreateMap<UserForRegisterEmployeeDto, User>()
                 .ForMember(dest => dest.UserName, opt =>
                 opt.MapFrom(src => src.Email));
             CreateMap<MachineUsageForCreationDto, MachineUsage>();
