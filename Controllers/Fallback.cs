@@ -7,7 +7,7 @@ namespace EasyClean.API.Controllers
 {
     [OpenApiTag("Fallback",
               Description = "Controller with view support to fallback to " +
-        "                   and render angular SPA")]
+                            "and render angular SPA")]
     [AllowAnonymous]
     public class Fallback : Controller
     {

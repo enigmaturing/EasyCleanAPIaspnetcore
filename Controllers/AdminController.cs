@@ -12,8 +12,8 @@ using NSwag.Annotations;
 
 namespace EasyClean.API.Controllers
 {
-    [OpenApiTag("Admin", Description = "Creates employees and " +
-                         "lets administrate their roles")]
+    [OpenApiTag("Admin", Description = "Lets the admin administrate " +
+                         " the roles of their employees.")]
     [ApiController]
     [Route("api/[controller]")]
     public class AdminController : ControllerBase
@@ -29,16 +29,17 @@ namespace EasyClean.API.Controllers
 
         // GET: api/Admin/usersWithRoles
         /// <summary>
-        /// Returns all users along with their roles
+        /// Returns all users along with their roles.
+        /// (Requires roles: Admin or Developer)
         /// </summary>
-        /// <response code="401">Unauthorized. The provided JWT Token is wrong, 
-        /// does not have role admin or it was not provided.</response>              
         /// <response code="200">OK. Returns the list of users with roles.</response>        
+        /// <response code="401">Unauthorized. The provided JWT Token is wrong, 
+        /// does not have the proper role or it was not provided.</response>              
         /// <response code="404">NotFound. No users were found.</response>        
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("usersWithRoles")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetUsersWithRoles()
         {
@@ -71,6 +72,7 @@ namespace EasyClean.API.Controllers
         // POST: api/Admin/editRoles/5
         /// <summary>
         /// Modifies the roles of a given user.
+        /// (Requires roles: Admin or Developer)
         /// </summary>
         /// <remarks>
         /// The roles must be specified in the body of this post request in the form
@@ -78,17 +80,17 @@ namespace EasyClean.API.Controllers
         /// </remarks>
         /// <param name="userId">Id of the user whose role must be modified.</param>
         /// <param name="roleEditDto">Roles to be modified</param>
-        /// <response code="401">Unauthorized. The provided JWT Token is wrong, 
-        /// does not have role admin or it was not provided.</response>               
         /// <response code="200">OK. Roles were edited. In addition, returns the specified roles.</response>        
-        /// <response code="404">NotFound. The user with the specified id was not found.</response>
         /// <response code="400">Bad request. Failed on dealing on adding /removing roles for user in DB.</response>
+        /// <response code="401">Unauthorized. The provided JWT Token is wrong, 
+        /// does not have the proper role or it was not provided.</response>                
+        /// <response code="404">NotFound. The user with the specified id was not found.</response>
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("editRoles/{userId}")]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EditRoles(string userId, RoleEditDto roleEditDto)
         {
             // Find the user in the DB and retrieve its actual roles

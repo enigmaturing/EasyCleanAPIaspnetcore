@@ -14,7 +14,7 @@ using NSwag.Annotations;
 
 namespace EasyClean.API.Controllers
 {
-    [OpenApiTag("Auth", Description = "Registers and logs users in")]
+    [OpenApiTag("Auth", Description = "Registers and logs users in.")]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -28,15 +28,19 @@ namespace EasyClean.API.Controllers
 
         // POST: api/Auth/register/employee
         /// <summary>
-        /// Registers a user in the api and assigns eployee roles to him specified in DTO
+        /// Registers a new user in the api and assigns employee roles to it, as specified in DTO.
+        /// (Requires roles: Admin or Developer)
         /// </summary>
-        /// <param name="userForRegisteEmployeeDto">Information about the user that wants to be registered</param>
-        /// <response code="201">OK.</response>        
+        /// <param name="userForRegisteEmployeeDto">Information about the user that wants to be registered.</param>
+        /// <response code="201">Created.</response>        
         /// <response code="400">It was not possible to register the user. Email alreday taken.</response>
+        /// <response code="401">Unauthorized. The provided JWT Token is wrong, 
+        /// does not have the proper role or it was not provided.</response>    
         [HttpPost("register/employee")]
         [Authorize(Policy = "RequireAdminRole")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> RegisterEmployee(UserForRegisterEmployeeDto userForRegisteEmployeeDto)
         {
             var user = await this.repo.RegisterEmployee(userForRegisteEmployeeDto);
@@ -53,10 +57,11 @@ namespace EasyClean.API.Controllers
 
         // POST: api/Auth/register/client
         /// <summary>
-        /// Registers a user in the api and assigns client role to it
+        /// Registers a new user in the api and assigns client role to it.
+        /// (Allows anonymous access)
         /// </summary>
-        /// <param name="userForRegisterClientDto">Information about the user that wants to be registered</param>
-        /// <response code="201">OK.</response>        
+        /// <param name="userForRegisterClientDto">Information about the user that wants to be registered.</param>
+        /// <response code="201">Created.</response>        
         /// <response code="400">It was not possible to register the user. Email alreday taken.</response>
         [HttpPost("register/client")]
         [AllowAnonymous]
@@ -78,11 +83,12 @@ namespace EasyClean.API.Controllers
 
         // POST: api/Auth/login
         /// <summary>
-        /// Logs a user in the api
+        /// Logs an already registered user in the api.
+        /// (Allows anonymous access)
         /// </summary>
-        /// <param name="userForLoginDto">Email and password of the user that logs in</param>
+        /// <param name="userForLoginDto">Email and password of the user that logs in.</param>
         /// <response code="201">OK.</response>        
-        /// <response code="401">Wrong email or password</response>  
+        /// <response code="401">Unauthorized to get token. Wrong email or password.</response>  
         [HttpPost("login")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status201Created)]

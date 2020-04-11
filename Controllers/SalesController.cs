@@ -12,7 +12,7 @@ using NSwag.Annotations;
 
 namespace EasyClean.API.Controllers
 {
-    [OpenApiTag("Sales", Description = "Handles usages of machines")]
+    [OpenApiTag("Sales", Description = "Handles usages of machines.")]
     [Route("api/[controller]")]
     [ApiController]
     public class SalesController : ControllerBase
@@ -29,10 +29,13 @@ namespace EasyClean.API.Controllers
         // GET: api/Sales/machineUsages
         /// <summary>
         /// Returns all usages registered in all machines.
+        /// (Requires roles: Admin, Backoffice or Developer)
         /// </summary>
-        /// <response code="200">OK.</response>        
+        /// <response code="200">OK.</response>       
+        /// <response code="401">No BackOfficeEmployee, Admin or Developer role associated to this JWT Token.</response>
         /// <response code="404">No machine usages found.</response>
         [HttpGet("machineUsages")]
+        [Authorize(Policy = "RequireBackOfficeRole")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMachineUsages()
@@ -49,15 +52,17 @@ namespace EasyClean.API.Controllers
         // POST: api/Sales/machineUsages
         /// <summary>
         /// Creates a new machine usage of a given machine for a given user.
+        /// (Requires role: Client)
         /// </summary>
         /// <param name="machineUsageForCreationDto">Details abot the machine usage to be created.</param>
-        /// <response code="201">Created.</response>        
+        /// <response code="200">Ok.</response>        
         /// <response code="400">Client has not enough credit to make this usage in this machine</response>
-        /// <response code="401">No client role associated to this JWT Token</response>
+        /// <response code="401">Unauthorized. The provided JWT Token is wrong, 
+        /// does not have the proper role or it was not provided.</response>    
         /// <response code="404">No user, machine or tariff found for the provided id.</response>
         [Authorize(Policy = "RequireClientRole")]
         [HttpPost("machineUsages")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -102,14 +107,16 @@ namespace EasyClean.API.Controllers
         // POST: api/Sales/topups
         /// <summary>
         /// Creates a new topup for a given user.
+        /// (Requires roles: FrontDeskEmployee, Admin or Developer)
         /// </summary>
         /// <param name="topupForCreationDto">Details about the topup to be created.</param>
-        /// <response code="201">Created.</response>        
-        /// <response code="401">No FrontDeskEmployee role associated to this JWT Token</response>
+        /// <response code="200">Ok.</response>        
+        /// <response code="401">Unauthorized. The provided JWT Token is wrong, 
+        /// does not have the proper role or it was not provided.</response>    
         /// <response code="404">No client or employee found for the provided id.</response>
         [Authorize(Policy = "RequireClientManagementRole")]
         [HttpPost("topups")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CreateTopup(TopupForCreationDto topupForCreationDto)

@@ -6,16 +6,18 @@
     <members>
         <member name="M:EasyClean.API.Controllers.AdminController.GetUsersWithRoles">
             <summary>
-            Returns all users along with their roles
+            Returns all users along with their roles.
+            (Requires roles: Admin or Developer)
             </summary>
-            <response code="401">Unauthorized. The provided JWT Token is wrong, 
-            does not have role admin or it was not provided.</response>              
             <response code="200">OK. Returns the list of users with roles.</response>        
+            <response code="401">Unauthorized. The provided JWT Token is wrong, 
+            does not have the proper role or it was not provided.</response>              
             <response code="404">NotFound. No users were found.</response>        
         </member>
         <member name="M:EasyClean.API.Controllers.AdminController.EditRoles(System.String,EasyClean.API.Dtos.RoleEditDto)">
             <summary>
             Modifies the roles of a given user.
+            (Requires roles: Admin or Developer)
             </summary>
             <remarks>
             The roles must be specified in the body of this post request in the form
@@ -23,122 +25,151 @@
             </remarks>
             <param name="userId">Id of the user whose role must be modified.</param>
             <param name="roleEditDto">Roles to be modified</param>
-            <response code="401">Unauthorized. The provided JWT Token is wrong, 
-            does not have role admin or it was not provided.</response>               
             <response code="200">OK. Roles were edited. In addition, returns the specified roles.</response>        
-            <response code="404">NotFound. The user with the specified id was not found.</response>
             <response code="400">Bad request. Failed on dealing on adding /removing roles for user in DB.</response>
+            <response code="401">Unauthorized. The provided JWT Token is wrong, 
+            does not have the proper role or it was not provided.</response>                
+            <response code="404">NotFound. The user with the specified id was not found.</response>
         </member>
         <member name="M:EasyClean.API.Controllers.AuthController.RegisterEmployee(EasyClean.API.Dtos.UserForRegisterEmployeeDto)">
             <summary>
-            Registers a user in the api and assigns eployee roles to him specified in DTO
+            Registers a new user in the api and assigns employee roles to it, as specified in DTO.
+            (Requires roles: Admin or Developer)
             </summary>
-            <param name="userForRegisteEmployeeDto">Information about the user that wants to be registered</param>
-            <response code="201">OK.</response>        
+            <param name="userForRegisteEmployeeDto">Information about the user that wants to be registered.</param>
+            <response code="201">Created.</response>        
             <response code="400">It was not possible to register the user. Email alreday taken.</response>
+            <response code="401">Unauthorized. The provided JWT Token is wrong, 
+            does not have the proper role or it was not provided.</response>    
         </member>
         <member name="M:EasyClean.API.Controllers.AuthController.RegisterClient(EasyClean.API.Dtos.UserForRegisterClientDto)">
             <summary>
-            Registers a user in the api and assigns client role to it
+            Registers a new user in the api and assigns client role to it.
+            (Allows anonymous access)
             </summary>
-            <param name="userForRegisterClientDto">Information about the user that wants to be registered</param>
-            <response code="201">OK.</response>        
+            <param name="userForRegisterClientDto">Information about the user that wants to be registered.</param>
+            <response code="201">Created.</response>        
             <response code="400">It was not possible to register the user. Email alreday taken.</response>
         </member>
         <member name="M:EasyClean.API.Controllers.AuthController.Login(EasyClean.API.Dtos.UserForLoginDto)">
             <summary>
-            Logs a user in the api
+            Logs an already registered user in the api.
+            (Allows anonymous access)
             </summary>
-            <param name="userForLoginDto">Email and password of the user that logs in</param>
+            <param name="userForLoginDto">Email and password of the user that logs in.</param>
             <response code="201">OK.</response>        
-            <response code="401">Wrong email or password</response>  
+            <response code="401">Unauthorized to get token. Wrong email or password.</response>  
         </member>
         <member name="M:EasyClean.API.Controllers.MachinesController.GetMachineGroups">
             <summary>
             Returns all machine groups with information about them.
+            (Requires no specific roles. User must be just logged in)
             </summary>
-            <response code="201">OK.</response>        
+            <response code="200">Ok.</response>        
             <response code="400">It was not possible to retrieve any machine group.</response>
+            <response code="401">Unauthorized. The provided JWT Token is wrong
+            or it was not provided.</response>    
         </member>
         <member name="M:EasyClean.API.Controllers.SalesController.GetMachineUsages">
             <summary>
             Returns all usages registered in all machines.
+            (Requires roles: Admin, Backoffice or Developer)
             </summary>
-            <response code="200">OK.</response>        
+            <response code="200">OK.</response>       
+            <response code="401">No BackOffice, Admin or Developer role associated to this JWT Token.</response>
             <response code="404">No machine usages found.</response>
         </member>
         <member name="M:EasyClean.API.Controllers.SalesController.CreateMachineUsage(EasyClean.API.Dtos.MachineUsageForCreationDto)">
             <summary>
             Creates a new machine usage of a given machine for a given user.
+            (Requires role: Client)
             </summary>
             <param name="machineUsageForCreationDto">Details abot the machine usage to be created.</param>
-            <response code="201">Created.</response>        
+            <response code="200">Ok.</response>        
             <response code="400">Client has not enough credit to make this usage in this machine</response>
-            <response code="401">No client role associated to this JWT Token</response>
+            <response code="401">Unauthorized. The provided JWT Token is wrong, 
+            does not have the proper role or it was not provided.</response>    
             <response code="404">No user, machine or tariff found for the provided id.</response>
         </member>
         <member name="M:EasyClean.API.Controllers.SalesController.CreateTopup(EasyClean.API.Dtos.TopupForCreationDto)">
             <summary>
             Creates a new topup for a given user.
+            (Requires roles: FrontDeskEmployee, Admin or Developer)
             </summary>
             <param name="topupForCreationDto">Details about the topup to be created.</param>
-            <response code="201">Created.</response>        
-            <response code="401">No FrontDeskEmployee role associated to this JWT Token</response>
+            <response code="200">Ok.</response>        
+            <response code="401">Unauthorized. The provided JWT Token is wrong, 
+            does not have the proper role or it was not provided.</response>    
             <response code="404">No client or employee found for the provided id.</response>
         </member>
         <member name="M:EasyClean.API.Controllers.TariffsController.CreateTariff(EasyClean.API.Dtos.TariffForCreationDto)">
             <summary>
-            Creates a new tariff for a given machine group
+            Creates a new tariff for a given machine group.
+            (Requires roles: Admin or Developer)
             </summary>
             <param name="tariffForCreationDto">Details abot the tariff to be created</param>
-            <response code="201">OK.</response>        
+            <response code="200">Ok.</response>
+            <response code="401">Unauthorized. The provided JWT Token is wrong, 
+            does not have the proper role or it was not provided.</response>    
             <response code="404">It was not possible to create the tariff. No machine group found
             under the provided machine group id</response>
         </member>
         <member name="M:EasyClean.API.Controllers.TariffsController.GetTariffs">
             <summary>
-            Returns all tariffs for each machine group available
+            Returns all tariffs for each machine group available.
+            (Requires roles: FrontDeskEmployee, BackOfficeEmployee, Admin or Developer)
             </summary>
-            <response code="201">OK.</response>        
+            <response code="200">Ok.</response> 
+            <response code="401">Unauthorized. The provided JWT Token is wrong, 
+            does not have the proper role or it was not provided.</response>    
             <response code="404">No tariff found</response>
         </member>
         <member name="M:EasyClean.API.Controllers.TariffsController.GetTariff(System.Int32)">
             <summary>
-            Retunrs information about a tariff by its id
+            Retunrs information about a tariff by its id.
+            (Requires roles: BackOfficeEmployee, Admin or Developer)
             </summary>
             <param name="id">Id of the tariff whose information should be retrieved</param>
-            <response code="201">OK.</response>        
+            <response code="200">Ok.</response>  
+            <response code="401">Unauthorized. The provided JWT Token is wrong, 
+            does not have the proper role or it was not provided.</response>    
             <response code="404">No tariff found under this tariff id</response>
         </member>
         <member name="M:EasyClean.API.Controllers.TariffsController.GetTariffsOfMachineGroup(System.Int32)">
             <summary>
-            Retunrs all tariffs for a given machine group id
+            Retunrs all tariffs for a given machine group id.
+            (Requires no specific roles. User must be just logged in)
             </summary>
-            <param name="id">Id of the machine group whose tariffs should be retrieved</param>
-            <response code="201">OK.</response>        
-            <response code="404">No tariff found for this machine group</response>
+            <param name="id">Id of the machine group whose tariffs should be retrieved.</param>
+            <response code="200">Ok.</response>        
+            <response code="401">Unauthorized. The provided JWT Token is wrong, 
+            does not have the proper role or it was not provided.</response>    
+            <response code="404">No tariff found for this machine group.</response>
         </member>
         <member name="M:EasyClean.API.Controllers.UsersController.GetUsers">
             <summary>
             Retrieves all users.
+            (Requires roles: BackOfficeEmployee, Admin or Developer)
             </summary>
             <remarks>
             The returned user is mapped to a UserForListDto.
             </remarks>
-            <response code="401">Unauthorized. The provided JWT Token is wrong or it was not provided</response>              
             <response code="200">OK. Returns all users.</response>        
+            <response code="401">Unauthorized. The provided JWT Token is wrong, 
+            does not have the proper role or it was not provided.</response>               
             <response code="404">NotFound. No users found.</response>        
         </member>
         <member name="M:EasyClean.API.Controllers.UsersController.GetUser(System.Int32)">
             <summary>
             Retrieves a single user by his id.
+            (Requires no specific roles. User must be just logged in)
             </summary>
             <remarks>
             The returned user is mapped to a UserForDetailedDto.
             </remarks>
             <param name="id">Id of the user to be retrieved.</param>
-            <response code="401">Unauthorized. The provided JWT Token is wrong or it was not provided</response>              
             <response code="200">OK. Returns the spceficied user.</response>        
+            <response code="401">Unauthorized. The provided JWT Token is wrong or it was not provided</response>              
             <response code="404">NotFound. The user with the specified id was not found.</response>        
         </member>
     </members>
