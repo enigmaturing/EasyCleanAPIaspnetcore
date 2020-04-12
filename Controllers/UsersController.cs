@@ -52,6 +52,34 @@ namespace EasyClean.API.Controllers
             return Ok(usersToReturnToClient);
         }
 
+        // GET: api/Users/role/client
+        /// <summary>
+        /// Retrieves all users with role client.
+        /// (Requires roles: FrontDeskEmployee, BackOfficeEmployee, Admin or Developer)
+        /// </summary>
+        /// <remarks>
+        /// The returned user is mapped to a UserForListDto.
+        /// </remarks>
+        /// <response code="200">OK. Returns all users.</response>        
+        /// <response code="401">Unauthorized. The provided JWT Token is wrong, 
+        /// does not have the proper role or it was not provided.</response>               
+        /// <response code="404">NotFound. No users with role client found.</response>        
+        [HttpGet("role/client")]
+        [Authorize(Policy = "RequireEmployeeRole")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetClients()
+        {
+            var users = await this.repo.GetClients();
+            if (users == null)
+            {
+                return NotFound();
+            }
+            var usersToReturnToClient = this.mapper.Map<IEnumerable<UserForListDto>>(users);
+            return Ok(usersToReturnToClient);
+        }
+
         // GET: api/Users/5
         /// <summary>
         /// Retrieves a single user by his id.

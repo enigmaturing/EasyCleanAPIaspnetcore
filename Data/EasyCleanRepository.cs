@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EasyClean.API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyClean.API.Data
@@ -8,8 +10,10 @@ namespace EasyClean.API.Data
     public class EasyCleanRepository : IEasyCleanRepository
     {
         private readonly DataContext dataContext;
-        public EasyCleanRepository(DataContext dataContext)
+        private readonly UserManager<User> userManager;
+        public EasyCleanRepository(DataContext dataContext, UserManager<User> userManager)
         {
+            this.userManager = userManager;
             this.dataContext = dataContext;
         }
 
@@ -47,9 +51,9 @@ namespace EasyClean.API.Data
 
         public async Task<IEnumerable<MachineGroup>> GetMachineGroups()
         {
-           var machines = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
-                                                              .Include(machineGroup => machineGroup.Tariffs)
-                                                              .ToListAsync();
+            var machines = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
+                                                               .Include(machineGroup => machineGroup.Tariffs)
+                                                               .ToListAsync();
             return machines;
         }
 
@@ -89,7 +93,7 @@ namespace EasyClean.API.Data
             var tariff = await this.dataContext.Tariffs.FirstOrDefaultAsync(tariff => tariff.Id == id);
             return tariff;
         }
-        
+
         public async Task<User> GetUser(int id)
         {
             // IMPORTANT: We want to return also navigation properties and therefore we have
@@ -110,6 +114,14 @@ namespace EasyClean.API.Data
             var users = await this.dataContext.Users.Include(user => user.MachineUsages).Include(t => t.Topups).ToListAsync();
             return users;
         }
+
+        public async Task<IEnumerable<User>> GetClients()
+        {
+            // Return only users in role "Client"
+            var usersOfRole = await userManager.GetUsersInRoleAsync("Client");
+            return usersOfRole;
+        }
+
 
         public async Task<bool> SaveAll()
         {

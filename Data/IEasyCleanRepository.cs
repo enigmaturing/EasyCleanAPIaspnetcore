@@ -19,5 +19,6 @@ namespace EasyClean.API.Data
         Task<IEnumerable<Tariff>> GetTariffs();
         Task<IEnumerable<Tariff>> GetTariffsOfMachineGroup(int id);
         Task<Tariff> GetTariff(int id);
+        Task<IEnumerable<User>> GetClients();
     }
 }
