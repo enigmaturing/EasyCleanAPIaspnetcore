@@ -29,7 +29,7 @@ namespace EasyClean.API.Controllers
         // GET: api/Sales/machineUsages
         /// <summary>
         /// Returns all usages registered in all machines.
-        /// (Requires roles: Admin, Backoffice or Developer)
+        /// (Requires roles: Admin, BackofficeEmployee or Developer)
         /// </summary>
         /// <response code="200">OK.</response>       
         /// <response code="401">No BackOfficeEmployee, Admin or Developer role associated to this JWT Token.</response>
@@ -145,6 +145,30 @@ namespace EasyClean.API.Controllers
             }
 
             throw new Exception("Creating the topup failed on save");
+        }
+
+        // GET: api/Sales/topups/5
+        /// <summary>
+        /// Returns topups of a given client.
+        /// (Requires roles: Admin, FrontDeskEmployee, BackofficeEmployee or Developer)
+        /// </summary>
+        /// <param name="id">Id of the client whose topups must be retrieved.</param>
+        /// <response code="200">OK.</response>       
+        /// <response code="401">No FrontDeskEmployee, BackOfficeEmployee, Admin or Developer role associated to this JWT Token.</response>
+        /// <response code="404">No machine usages found.</response>
+        [HttpGet("topups/{id}")]
+        [Authorize(Policy = "RequireEmployeeRole")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetTopupsOfClient(int id)
+        {
+            var topups = await this.repo.GetTopupsOfClient(id);
+            if (topups == null)
+            {
+                return NotFound("No topups found for this client");
+            }
+            var topupsToReturnToClient = this.mapper.Map<IEnumerable<TopupsForDetailedDto>>(topups);
+            return Ok(topupsToReturnToClient);
         }
     }
 }

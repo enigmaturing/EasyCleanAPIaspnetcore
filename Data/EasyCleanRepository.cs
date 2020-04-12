@@ -80,6 +80,12 @@ namespace EasyClean.API.Data
             return tariffs;
         }
 
+        public async Task<IEnumerable<Topup>> GetTopupsOfClient(int userId)
+        {
+            var topups = await this.dataContext.Topups.Include(topup => topup.User).Where(topup => topup.UserId == userId).ToListAsync();
+            return topups;
+        }
+
         public async Task<IEnumerable<Tariff>> GetTariffsOfMachineGroup(int id)
         {
             var machineGroups = await this.dataContext.MachineGroups.Include(machineGroup => machineGroup.Machines)
