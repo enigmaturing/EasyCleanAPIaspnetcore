@@ -73,7 +73,7 @@
         <member name="M:EasyClean.API.Controllers.SalesController.GetMachineUsages">
             <summary>
             Returns all usages registered in all machines.
-            (Requires roles: Admin, BackofficeEmployee or Developer)
+            (Requires roles: Admin, Backoffice or Developer)
             </summary>
             <response code="200">OK.</response>       
             <response code="401">No BackOfficeEmployee, Admin or Developer role associated to this JWT Token.</response>
@@ -101,16 +101,6 @@
             <response code="401">Unauthorized. The provided JWT Token is wrong, 
             does not have the proper role or it was not provided.</response>    
             <response code="404">No client or employee found for the provided id.</response>
-        </member>
-        <member name="M:EasyClean.API.Controllers.SalesController.GetTopupsOfClient(System.Int32)">
-            <summary>
-            Returns topups of a given client.
-            (Requires roles: Admin, FrontDeskEmployee, BackofficeEmployee or Developer)
-            </summary>
-            <param name="id">Id of the client whose topups must be retrieved.</param>
-            <response code="200">OK.</response>       
-            <response code="401">No FrontDeskEmployee, BackOfficeEmployee, Admin or Developer role associated to this JWT Token.</response>
-            <response code="404">No machine usages found.</response>
         </member>
         <member name="M:EasyClean.API.Controllers.TariffsController.CreateTariff(EasyClean.API.Dtos.TariffForCreationDto)">
             <summary>
