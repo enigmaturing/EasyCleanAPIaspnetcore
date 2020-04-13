@@ -68,6 +68,7 @@ namespace EasyClean.API.Data
         public async Task<User> RegisterEmployee(UserForRegisterEmployeeDto userForRegisterEmployeeDto)
         {
             var userToCreate = this.mapper.Map<User>(userForRegisterEmployeeDto); // Map a user from the recived dto
+            userToCreate.Created = DateTime.Now;
             var result = await this.userManager.CreateAsync(userToCreate, "password"); // set "password" as default password
 
             if (result.Succeeded)

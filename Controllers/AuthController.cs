@@ -47,7 +47,6 @@ namespace EasyClean.API.Controllers
 
             if (user != null)
             {
-                user.Created = DateTime.Now;
                 return StatusCode(201);
                 // ToDo: Return not only the code, but also the route where the user is available
                 // ToDo: Return the user with the response too, mapped to a userForDetailedDto -> v.204
