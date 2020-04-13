@@ -49,6 +49,7 @@ namespace EasyClean.API.Data
         public async Task<User> RegisterClient(UserForRegisterClientDto userForRegisterClientDto)
         {
             var userToCreate = this.mapper.Map<User>(userForRegisterClientDto); // Map a user from the recived dto
+            userToCreate.Created = DateTime.Now;
             var result = await this.userManager.CreateAsync(userToCreate, userForRegisterClientDto.Password); // set "password" as default password
 
             if (result.Succeeded)
