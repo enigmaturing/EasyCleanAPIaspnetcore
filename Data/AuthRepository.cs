@@ -40,7 +40,13 @@ namespace EasyClean.API.Data
                 var result = await signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
                 if (result.Succeeded)
                 {
-                    return await GenerateJwtToken(user);
+                    user.LastActive = DateTime.Now;
+                    var lastActive = await this.userManager.UpdateAsync(user);
+                    
+                    if (lastActive.Succeeded)
+                    {
+                        return await GenerateJwtToken(user);
+                    }
                 }
             }
             return null;
