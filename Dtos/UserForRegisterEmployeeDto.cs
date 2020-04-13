@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EasyClean.API.Dtos
 {
@@ -17,5 +18,13 @@ namespace EasyClean.API.Dtos
         public string UserName { get; set; }
 
         public string[] RoleNames { get; set; }
+
+        public string Gender { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string Street { get; set; }
+        public int Number { get; set; }
+        public int ZIP { get; set; }
+        public string City { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }
