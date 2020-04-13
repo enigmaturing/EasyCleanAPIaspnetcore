@@ -41,12 +41,13 @@ namespace EasyClean.API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> RegisterEmployee(UserForRegisterEmployeeDto userForRegisteEmployeeDto)
+        public async Task<IActionResult> RegisterEmployee(UserForRegisterEmployeeDto userForRegisterEmployeeDto)
         {
-            var user = await this.repo.RegisterEmployee(userForRegisteEmployeeDto);
+            var user = await this.repo.RegisterEmployee(userForRegisterEmployeeDto);
 
             if (user != null)
             {
+                user.Created = DateTime.Now;
                 return StatusCode(201);
                 // ToDo: Return not only the code, but also the route where the user is available
                 // ToDo: Return the user with the response too, mapped to a userForDetailedDto -> v.204
