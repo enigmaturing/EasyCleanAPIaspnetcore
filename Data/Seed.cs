@@ -44,7 +44,8 @@ namespace EasyClean.API.Data
                 {
                     Email = "boss@easyclean.com",
                     UserName =  "boss@easyclean.com",
-                    Surname = "Oppermann"
+                    Surname = "Oppermann",
+                    PhotoUrl = "http://www.javiergonzalez.de/easyclean/user.png"
                 };
 
                 var result = userManager.CreateAsync(AdminUser, "password").Result;
@@ -64,6 +65,7 @@ namespace EasyClean.API.Data
                     Email = "frontdesk@easyclean.com",
                     UserName =  "frontdesk@easyclean.com",
                     Surname = "Mueller"
+                    PhotoUrl = "http://www.javiergonzalez.de/easyclean/user.png"
                 };
 
                 result = userManager.CreateAsync(frontDeskUser, "password").Result;
@@ -81,6 +83,7 @@ namespace EasyClean.API.Data
                     Email = "backoffice@easyclean.com",
                     UserName =  "backoffice@easyclean.com",
                     Surname = "Schwarze"
+                    PhotoUrl = "http://www.javiergonzalez.de/easyclean/user.png"
                 };
 
                 result = userManager.CreateAsync(backOfficeUser, "password").Result;
