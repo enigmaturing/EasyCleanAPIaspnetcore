@@ -64,7 +64,7 @@ namespace EasyClean.API.Data
                 {
                     Email = "frontdesk@easyclean.com",
                     UserName =  "frontdesk@easyclean.com",
-                    Surname = "Mueller"
+                    Surname = "Mueller",
                     PhotoUrl = "http://www.javiergonzalez.de/easyclean/user.png"
                 };
 
@@ -82,7 +82,7 @@ namespace EasyClean.API.Data
                 {
                     Email = "backoffice@easyclean.com",
                     UserName =  "backoffice@easyclean.com",
-                    Surname = "Schwarze"
+                    Surname = "Schwarze",
                     PhotoUrl = "http://www.javiergonzalez.de/easyclean/user.png"
                 };
 
