@@ -53,8 +53,9 @@ namespace EasyClean.API.Data
                 {
                     var Admin = userManager.FindByEmailAsync("boss@easyclean.com").Result;
                     userManager.AddToRolesAsync(Admin, new[] { "Admin", 
-                                                                       "FrontDeskEmployee",
-                                                                       "BackOfficeEmployee"}).Wait();
+                                                                "FrontDeskEmployee",
+                                                                "BackOfficeEmployee",
+                                                                "Client"}).Wait();
                 }
 
                 // create a new user called AdminUser and give him the role of Admin
