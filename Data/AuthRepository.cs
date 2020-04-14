@@ -83,9 +83,12 @@ namespace EasyClean.API.Data
                 // Create a list of roles form ·"userToCreate" containing "Employee" too
                 List<string> roleNames = new List<string>();
                 roleNames.Add("Employee");
-                foreach (var role in userForRegisterEmployeeDto.RoleNames)
+                if (userForRegisterEmployeeDto.RoleNames != null)
                 {
-                    roleNames.Add(role);
+                    foreach (var role in userForRegisterEmployeeDto.RoleNames)
+                    {
+                        roleNames.Add(role);
+                    }
                 }
                 // Assign the list of roles to the new user to make it an employee
                 var userCreated = userManager.FindByEmailAsync(userForRegisterEmployeeDto.Email).Result;
