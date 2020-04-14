@@ -50,6 +50,7 @@ namespace EasyClean.API.Controllers
                     {
                         Id = user.Id,
                         Email = user.Email,
+                        Name = user.Name,
                         Surname = user.Surname,
                         Roles = (from userRole in user.UserRoles
                                  join role in dataContext.Roles
