@@ -81,21 +81,43 @@ namespace EasyClean.API.Controllers
             return BadRequest("Not possible to register the user. Try with another email.");
         }
 
-        // POST: api/Auth/login
+        // POST: api/Auth/login/client
         /// <summary>
-        /// Logs an already registered user in the api.
+        /// Logs an already registered client in the api.
         /// (Allows anonymous access)
         /// </summary>
-        /// <param name="userForLoginDto">Email and password of the user that logs in.</param>
+        /// <param name="userForLoginDto">Email and password of the client that logs in.</param>
         /// <response code="201">OK.</response>        
         /// <response code="401">Unauthorized to get token. Wrong email or password.</response>  
-        [HttpPost("login")]
+        [HttpPost("login/client")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
+        public async Task<IActionResult> LoginClient(UserForLoginDto userForLoginDto)
         {
-            var token = await this.repo.Login(userForLoginDto);
+            var token = await this.repo.LoginClient(userForLoginDto);
+            if (token != null)
+            {
+                return Ok(new { token = token }); 
+            }
+            return Unauthorized("Wrong email or password");
+        }
+
+        // POST: api/Auth/login/employee
+        /// <summary>
+        /// Logs an employee already registered user in the api.
+        /// (Allows anonymous access)
+        /// </summary>
+        /// <param name="userForLoginDto">Email and password of the employee that logs in.</param>
+        /// <response code="201">OK.</response>        
+        /// <response code="401">Unauthorized to get token. Wrong email or password.</response>  
+        [HttpPost("login/employee")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> LoginEmployee(UserForLoginDto userForLoginDto)
+        {
+            var token = await this.repo.LoginEmployee(userForLoginDto);
             if (token != null)
             {
                 return Ok(new { token = token }); 

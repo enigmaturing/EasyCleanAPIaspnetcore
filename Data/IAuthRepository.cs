@@ -8,6 +8,7 @@ namespace EasyClean.API.Data
     {
         Task<User> RegisterClient(UserForRegisterClientDto userForRegisterClientDto);
         Task<User> RegisterEmployee(UserForRegisterEmployeeDto userForRegisterEmployeeDto);
-        Task<string> Login(UserForLoginDto userForLoginDto);
+        Task<string> LoginClient(UserForLoginDto userForLoginDto);
+        Task<string> LoginEmployee(UserForLoginDto userForLoginDto);
     }
 }

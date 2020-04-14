@@ -28,7 +28,7 @@ namespace EasyClean.API.Data
             this.config = config;  // Inject IConfiguration from Startup.cs, so we can retrieve our token in method login
         }
 
-        public async Task<string> Login(UserForLoginDto userForLoginDto)
+        public async Task<string> LoginClient(UserForLoginDto userForLoginDto)
         {
             // Make use of ASP.NET Core Identity with UserManager and SigningManager:
             // UserManager:  Gives us the ability to store and retrieve Users in our DB.
@@ -37,15 +37,48 @@ namespace EasyClean.API.Data
 
             if (user != null)
             {
-                var result = await signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
-                if (result.Succeeded)
+                var resultIsClient = await userManager.IsInRoleAsync(user, "Client");
+                if (resultIsClient)
                 {
-                    user.LastActive = DateTime.Now;
-                    var lastActive = await this.userManager.UpdateAsync(user);
-                    
-                    if (lastActive.Succeeded)
+                    var result = await signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
+                    if (result.Succeeded)
                     {
-                        return await GenerateJwtToken(user);
+                        user.LastActive = DateTime.Now;
+                        var lastActive = await this.userManager.UpdateAsync(user);
+                        
+                        if (lastActive.Succeeded)
+                        {
+                            return await GenerateJwtToken(user);
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        public async Task<string> LoginEmployee(UserForLoginDto userForLoginDto)
+        {
+            // Make use of ASP.NET Core Identity with UserManager and SigningManager:
+            // UserManager:  Gives us the ability to store and retrieve Users in our DB.
+            // SigningManager: Gives us the ability to check the user’s password and log the user in.
+            var user = await userManager.FindByEmailAsync(userForLoginDto.Email.ToLower());
+
+            if (user != null)
+            {
+                var resultIsEmployee = await userManager.IsInRoleAsync(user, "Employee");
+                var resultIsAdmin = await userManager.IsInRoleAsync(user, "Admin");
+                if (resultIsEmployee || resultIsAdmin)
+                {
+                    var result = await signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
+                    if (result.Succeeded)
+                    {
+                        user.LastActive = DateTime.Now;
+                        var lastActive = await this.userManager.UpdateAsync(user);
+                        
+                        if (lastActive.Succeeded)
+                        {
+                            return await GenerateJwtToken(user);
+                        }
                     }
                 }
             }

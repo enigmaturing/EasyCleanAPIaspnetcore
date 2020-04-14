@@ -51,12 +51,21 @@
             <response code="201">Created.</response>        
             <response code="400">It was not possible to register the user. Email alreday taken.</response>
         </member>
-        <member name="M:EasyClean.API.Controllers.AuthController.Login(EasyClean.API.Dtos.UserForLoginDto)">
+        <member name="M:EasyClean.API.Controllers.AuthController.LoginClient(EasyClean.API.Dtos.UserForLoginDto)">
             <summary>
-            Logs an already registered user in the api.
+            Logs an already registered client in the api.
             (Allows anonymous access)
             </summary>
-            <param name="userForLoginDto">Email and password of the user that logs in.</param>
+            <param name="userForLoginDto">Email and password of the client that logs in.</param>
+            <response code="201">OK.</response>        
+            <response code="401">Unauthorized to get token. Wrong email or password.</response>  
+        </member>
+        <member name="M:EasyClean.API.Controllers.AuthController.LoginEmployee(EasyClean.API.Dtos.UserForLoginDto)">
+            <summary>
+            Logs an employee already registered user in the api.
+            (Allows anonymous access)
+            </summary>
+            <param name="userForLoginDto">Email and password of the employee that logs in.</param>
             <response code="201">OK.</response>        
             <response code="401">Unauthorized to get token. Wrong email or password.</response>  
         </member>
