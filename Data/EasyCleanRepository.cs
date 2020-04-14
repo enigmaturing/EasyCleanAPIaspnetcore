@@ -61,7 +61,8 @@ namespace EasyClean.API.Data
         {
             var machineUsages = await this.dataContext.MachineUsages.Include(machineUsage => machineUsage.Machine)
                                                                         .ThenInclude(machine => machine.MachineGroup)
-                                                                    .Include(machineUsage => machineUsage.Tariff).ToListAsync();
+                                                                    .Include(machineUsage => machineUsage.Tariff)
+                                                                    .OrderByDescending(machineUsage => machineUsage.Date).ToListAsync();
             return machineUsages;
         }
 
