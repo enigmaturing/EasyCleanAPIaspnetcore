@@ -27,7 +27,7 @@ namespace EasyClean.API.Controllers
         {
             this.repo = repo;
             this.mapper = mapper;
-            this.config = config;  // Inject IConfiguration from Startup.cs, so we can retrieve our token in method login
+            this.config = config;  // Inject IConfiguration from Startup.cs, so we can retrieve our particle token in method GetMachineUages()
         }
 
         // GET: api/Sales/machineUsages
