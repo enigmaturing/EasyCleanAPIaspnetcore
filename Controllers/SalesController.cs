@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using EasyClean.API.Data;
@@ -8,6 +9,7 @@ using EasyClean.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using NSwag.Annotations;
 
 namespace EasyClean.API.Controllers
@@ -19,11 +21,13 @@ namespace EasyClean.API.Controllers
     {
         private readonly IEasyCleanRepository repo;
         private readonly IMapper mapper;
+        private readonly IConfiguration config;
 
-        public SalesController(IEasyCleanRepository repo, IMapper mapper)
+        public SalesController(IEasyCleanRepository repo, IMapper mapper, IConfiguration config)
         {
             this.repo = repo;
             this.mapper = mapper;
+            this.config = config;  // Inject IConfiguration from Startup.cs, so we can retrieve our particle token in method GetMachineUages()
         }
 
         // GET: api/Sales/machineUsages
@@ -68,33 +72,43 @@ namespace EasyClean.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CreateMachineUsage(MachineUsageForCreationDto machineUsageForCreationDto)
         {
+            // map machineUsage from the DTO recieved with the http call
             var machineUsage= mapper.Map<MachineUsage>(machineUsageForCreationDto);
 
+            // check if user, machine and tariff exist in DB
             var user = await repo.GetUser(machineUsage.UserId);
             var machine = await repo.GetMachine(machineUsage.MachineId);
             var tariff = await repo.GetTariff(machineUsage.TariffId);
-            
             if (user == null || machine == null || tariff == null)
             {
                 return NotFound("No user, machine or tariff found for the provided id");
             }
 
+            // check if user has enough credit to make use of this machine
             var totalPrice = machineUsage.QuantityOfServicesBooked * tariff.Price;
-
             if (user.RemainingCredit < totalPrice)
             {
                 return BadRequest("User has not enough credit to make this usage");
             }
 
+            // Add machine usage to DB
             machineUsage.User = user;
             machineUsage.Machine = machine;
             machineUsage.Tariff = tariff;
             machineUsage.Date = DateTime.Now;
-
             repo.Add(machineUsage);
             
+            // Update client's remaining credit in DB
             user.RemainingCredit -= totalPrice;
             repo.Update(user);
+
+            // Activate the desired machine
+            using (var httpClient = new HttpClient())
+            {
+                var formcontent = new FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("arg", "on")} );
+                var particleAccessToken = this.config.GetSection("AppSettings:ParticleAccessToken").Value;
+                var request = await httpClient.PostAsync("https://api.particle.io/v1/devices/e00fce68ba9a1f5ea4870186/motorToggle?access_token=" + particleAccessToken, formcontent);
+            }
 
             if (await repo.SaveAll())
             {
